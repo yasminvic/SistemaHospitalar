@@ -1,30 +1,38 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaHospitalar.Domain.DTO;
+using SistemaHospitalar.Domain.IServices;
 using SistemaHospitalar.Infra.Data.Context;
 
 namespace SistemaHospitalar.Web.Controllers
 {
     public class ConveniosController : Controller
     {
-        private readonly SQLServerContext _context;
+        private readonly IConvenioService _service;
 
-        public ConveniosController(SQLServerContext context)
+        public ConveniosController(IConvenioService service)
         {
-            _context = context;
+            _service = service;
         }
 
 
         // GET: ConveniosController
         public ActionResult Index()
         {
-            var conv = _context.Convenios.ToList();
+            var conv = _service.GetAll();
             return View(conv);
         }
 
         // GET: ConveniosController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var conv = await _service.FindById(id);
+            return View(conv);
         }
 
         // GET: ConveniosController/Create
@@ -36,37 +44,53 @@ namespace SistemaHospitalar.Web.Controllers
         // POST: ConveniosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(ConvenioDTO convenio)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    await _service.Save(convenio);
+                    TempData["MensagemSucesso"] = "Convênio adicionado com sucesso";
+                    return RedirectToAction(nameof(Index));
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                TempData["MensagemErro"] = "Erro ao adicionar covênio";
                 return View();
             }
         }
 
-        // GET: ConveniosController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var conv = await _service.FindById(id);
+            return View(conv);
         }
 
-        // POST: ConveniosController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, ConvenioDTO convenio)
         {
-            try
+            if(id == null || convenio == null)
             {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                await _service.Save(convenio);
+                TempData["MensagemSucesso"] = "Convênio alterado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            TempData["MensagemErro"] = "Erro ao alterar covênio";
+            return RedirectToAction(nameof(Index));
+    
         }
 
         // GET: ConveniosController/Delete/5

@@ -1,0 +1,78 @@
+﻿@using SistemaHospitalar.Domain.Entities
+@using SistemaHospitalar.Domain.Enum
+@model SistemaHospitalar.Domain.DTO.PacienteDTO
+
+@{
+    ViewData["Title"] = "Criar";
+}
+
+<div class="text-center title-page">
+    <h1 class="display-1"><strong>Adicionar Paciente</strong></h1>
+</div>                      
+
+
+<div id="form-pessoa">
+
+</div>
+
+<form asp-controller="Pacientes" asp-action="Create" method="post">
+ <div class="container">
+    <div class="row justify-content-center">
+    <div class="col-3">
+        <div class="form-group text-dark">
+        @* <label autofocus asp-for="pessoaId" for="pessoaId" class="color-label">Nome do Paciente</label>
+        <select asp-for="pessoaId" class="form-control" asp-items="ViewBag.pessoaId"></select>
+        <span asp-validation-for="pessoaId" class="text-danger"></span>*@  
+
+        <label autofocus asp-for="convenioId" for="convenioId" class="color-label">Nome do Convênio</label>
+        <select asp-for="convenioId" class="form-control" asp-items="ViewBag.ConvenioId"></select>
+        <span asp-validation-for="convenioId" class="text-danger"></span> 
+
+        <div class="form-group mt-2 ">
+            <label asp-for="situacao" class="control-label login-title"></label>
+            <select asp-for="situacao" class="form-control">
+                <option value="0">Selecione</option>
+                <option value="@SituacaoEnum.Obito">Óbito</option>
+                <option value="@SituacaoEnum.Alta">Alta</option>
+                <option value="@SituacaoEnum.Ativo">Ativo</option>
+            </select>
+            <span asp-validation-for="situacao" class="text-danger"></span>
+        </div>
+
+
+    </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />
+            </div>
+         </div>
+    
+    </div>
+ </div> 
+                                   
+</form>
+
+<div>
+    <a class="btn btn-dark" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(()=>{
+            $.ajax({
+            url: '../Pessoas/Create',
+            dataType: 'html',
+            success: (resp) =>{
+                $('#form-pessoa').html(resp);
+                }
+            });
+            
+        })
+    </script>
+}
+
+
+

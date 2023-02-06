@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistemaHospitalar.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Tabelas : Migration
+    public partial class TablesAtualizadas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rg = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -59,19 +60,6 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pessoas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Prontuarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PacienteId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Prontuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,8 +83,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         name: "FK_Enderecos_Pessoas_PessoaId",
                         column: x => x.PessoaId,
                         principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -105,8 +92,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PessoaId = table.Column<int>(type: "int", nullable: false),
                     EspecialidadeId = table.Column<int>(type: "int", nullable: false),
+                    PessoaId = table.Column<int>(type: "int", nullable: false),
                     CRM = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -116,14 +103,12 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         name: "FK_Medicos_EspecialidadesMedicas_EspecialidadeId",
                         column: x => x.EspecialidadeId,
                         principalTable: "EspecialidadesMedicas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Medicos_Pessoas_PessoaId",
                         column: x => x.PessoaId,
                         principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -143,14 +128,12 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         name: "FK_Pacientes_Convenios_ConvenioId",
                         column: x => x.ConvenioId,
                         principalTable: "Convenios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pacientes_Pessoas_PessoaId",
                         column: x => x.PessoaId,
                         principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -169,17 +152,16 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         name: "FK_Recepcionistas_Pessoas_PessoaId",
                         column: x => x.PessoaId,
                         principalTable: "Pessoas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProntuariosParciais",
+                name: "Prontuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProntuarioId = table.Column<int>(type: "int", nullable: false),
+                    PacienteId = table.Column<int>(type: "int", nullable: false),
                     MedicoId = table.Column<int>(type: "int", nullable: false),
                     QueixaPrincipal = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -192,19 +174,12 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProntuariosParciais", x => x.Id);
+                    table.PrimaryKey("PK_Prontuarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProntuariosParciais_Medicos_MedicoId",
+                        name: "FK_Prontuarios_Medicos_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "Medicos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProntuariosParciais_Prontuarios_ProntuarioId",
-                        column: x => x.ProntuarioId,
-                        principalTable: "Prontuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -245,19 +220,14 @@ namespace SistemaHospitalar.Infra.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pessoas",
-                columns: new[] { "Id", "Cpf", "CreatedOn", "DataNascimento", "Email", "Naturalidade", "Nome", "Perfil", "Sexo", "Sobrenome", "Telefone" },
+                columns: new[] { "Id", "Cpf", "CreatedOn", "DataNascimento", "Email", "Naturalidade", "Nome", "Perfil", "Rg", "Sexo", "Sobrenome", "Telefone" },
                 values: new object[,]
                 {
-                    { 1, "156.789.754-85", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9296), new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9277), "ana@gmail.com", "Blumenau/SC", "Ana", 1, 0, "da Silva", "(47)3339-4832" },
-                    { 2, "456.799.466-65", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9300), new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9300), "carlos@gmail.com", "Criciúma/SC", "Carlos", 0, 1, "da Silva", "(47)3339-1235" },
-                    { 3, "787.464.796-56", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9302), new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9301), "maria@gmail.com", "Joinville/SC", "Maria Clara", 0, 0, "da Silva", "(47)3339-8923" },
-                    { 4, "899.799.465-78", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9303), new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9303), "joao@gmail.com", "Blumenau/SC", "Jupiter", 1, 2, "da Silva", "(47)3339-8965" }
+                    { 1, "156.789.754-85", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6702), new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6684), "ana@gmail.com", "Blumenau/SC", "Ana", 1, "7.654.852", 0, "da Silva", "(47)3339-4832" },
+                    { 2, "456.799.466-65", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6705), new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6704), "carlos@gmail.com", "Criciúma/SC", "Carlos", 0, "7.654.852", 1, "da Silva", "(47)3339-1235" },
+                    { 3, "787.464.796-56", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6706), new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6706), "maria@gmail.com", "Joinville/SC", "Maria Clara", 0, "7.654.852", 0, "da Silva", "(47)3339-8923" },
+                    { 4, "899.799.465-78", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6708), new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6707), "joao@gmail.com", "Blumenau/SC", "Jupiter", 1, "7.654.852", 2, "da Silva", "(47)3339-8965" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Prontuarios",
-                columns: new[] { "Id", "PacienteId" },
-                values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "Enderecos",
@@ -286,12 +256,12 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 values: new object[] { 1, "02-D", 3 });
 
             migrationBuilder.InsertData(
-                table: "ProntuariosParciais",
-                columns: new[] { "Id", "Condutas", "CreatedOn", "Descricao", "ExameFisico", "HipoteseDiagnostica", "HistoricoFamiliar", "MedicoId", "Prescricao", "ProntuarioId", "QueixaPrincipal" },
+                table: "Prontuarios",
+                columns: new[] { "Id", "Condutas", "CreatedOn", "Descricao", "ExameFisico", "HipoteseDiagnostica", "HistoricoFamiliar", "MedicoId", "PacienteId", "Prescricao", "QueixaPrincipal" },
                 values: new object[,]
                 {
-                    { 1, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9467), "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "K29 - Gastrite e duodenite", "Ninguém na família com sistomas parecidos", 1, "Annita de 12/12hs por 3 dias", 1, "Dor na barriga" },
-                    { 2, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 3, 16, 9, 5, 763, DateTimeKind.Local).AddTicks(9468), "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "Dor de cabeça normal", "Ninguém na família com sistomas parecidos", 1, "Dipirona de 12/12hs por 3 dias", 1, "Dor de cabeça" }
+                    { 1, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6800), "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "K29 - Gastrite e duodenite", "Ninguém na família com sistomas parecidos", 1, 1, "Annita de 12/12hs por 3 dias", "Dor na barriga" },
+                    { 2, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 5, 18, 47, 22, 993, DateTimeKind.Local).AddTicks(6802), "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "Dor de cabeça normal", "Ninguém na família com sistomas parecidos", 1, 1, "Dipirona de 12/12hs por 3 dias", "Dor de cabeça" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -320,14 +290,9 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 column: "PessoaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProntuariosParciais_MedicoId",
-                table: "ProntuariosParciais",
+                name: "IX_Prontuarios_MedicoId",
+                table: "Prontuarios",
                 column: "MedicoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProntuariosParciais_ProntuarioId",
-                table: "ProntuariosParciais",
-                column: "ProntuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recepcionistas_PessoaId",
@@ -345,7 +310,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 name: "Pacientes");
 
             migrationBuilder.DropTable(
-                name: "ProntuariosParciais");
+                name: "Prontuarios");
 
             migrationBuilder.DropTable(
                 name: "Recepcionistas");
@@ -355,9 +320,6 @@ namespace SistemaHospitalar.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicos");
-
-            migrationBuilder.DropTable(
-                name: "Prontuarios");
 
             migrationBuilder.DropTable(
                 name: "EspecialidadesMedicas");

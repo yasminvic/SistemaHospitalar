@@ -34,15 +34,15 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return _repository.GetAll().Select(p => new PacienteDTO()
             {
                 id = p.Id,
-                convenioId = p.ConvenioId,
                 pessoaId = p.PessoaId,
+                convenioId = p.ConvenioId,
                 situacao = p.Situacao
             }).ToList();
         }
 
         public async Task<int> Save(PacienteDTO entity)
         {
-            if (entity.id < 0)
+            if (entity.id > 0)
             {
                 return await _repository.Update(entity.mapToEntity());
             }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaHospitalar.Domain.IRepositories
 {
-    public interface IProntuarioRepository : IBaseRepository<Prontuario>
+    public interface IProntuarioRepository: IBaseRepository<Prontuario>
     {
     }
 }

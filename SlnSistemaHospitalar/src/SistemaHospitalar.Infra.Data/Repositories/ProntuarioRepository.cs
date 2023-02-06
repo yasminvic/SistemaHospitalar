@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaHospitalar.Domain.Repositories
 {
-    public class ProntuarioRepository : BaseRepository<Prontuario>, IProntuarioRepository
+    public class ProntuarioRepository: BaseRepository<Prontuario>, IProntuarioRepository
     {
         private readonly SQLServerContext _context;
 

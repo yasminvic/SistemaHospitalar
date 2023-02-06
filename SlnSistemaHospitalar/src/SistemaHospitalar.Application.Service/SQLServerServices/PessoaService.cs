@@ -38,6 +38,7 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
                 sobrenome = p.Sobrenome,
                 email = p.Email,
                 cpf = p.Cpf,
+                rg = p.Rg,
                 telefone = p.Telefone,
                 dataNascimento = p.DataNascimento,
                 naturalidade = p.Naturalidade,
@@ -49,7 +50,7 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
 
         public async Task<int> Save(PessoaDTO entity)
         {
-            if (entity.id < 0)
+            if (entity.id > 0)
             {
                 return await _repository.Update(entity.mapToEntity());
             }
@@ -58,5 +59,11 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
                 return await _repository.Save(entity.mapToEntity());
             }
         }
+
+        //public PessoaDTO GetTheLast()
+        //{
+        //    var pessoa = new PessoaDTO();
+        //    return pessoa.mapToDTO(_repository.GetTheLast());
+        //}
     }
 }

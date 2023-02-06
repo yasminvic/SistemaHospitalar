@@ -40,7 +40,7 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
 
         public async Task<int> Save(EspecialidadeMedicaDTO entity)
         {
-            if (entity.id < 0)
+            if (entity.id > 0)
             {
                 return await _repository.Update(entity.mapToEntity());
             }

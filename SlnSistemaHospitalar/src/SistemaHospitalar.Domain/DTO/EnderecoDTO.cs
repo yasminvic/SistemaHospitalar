@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +20,8 @@ namespace SistemaHospitalar.Domain.DTO
         public string cidade { get; set; }
         public string uf { get; set; }
 
+
+
         public EnderecoDTO mapToDTO(Endereco endereco)
         {
             return new EnderecoDTO()
@@ -26,7 +30,7 @@ namespace SistemaHospitalar.Domain.DTO
                 pessoaId = endereco.PessoaId,
                 cep = endereco.Cep,
                 rua = endereco.Rua,
-                numero = endereco.Numero, 
+                numero = endereco.Numero,
                 bairro = endereco.Bairro,
                 cidade = endereco.Cidade,
                 uf = endereco.UF,

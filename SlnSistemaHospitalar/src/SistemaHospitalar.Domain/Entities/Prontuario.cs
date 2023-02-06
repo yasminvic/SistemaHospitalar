@@ -10,6 +10,17 @@ namespace SistemaHospitalar.Domain.Entities
     {
         public int Id { get; set; }
         public int PacienteId { get; set; }
-        public IEnumerable<ProntuarioParcial> ProntuariosParciais { get; set; }
+        public int MedicoId { get; set; }
+        public string QueixaPrincipal { get; set; }
+        public string Descricao { get; set; }
+        public string HistoricoFamiliar { get; set; }
+        public string ExameFisico { get; set; }
+        public string Condutas { get; set; }
+        public string HipoteseDiagnostica { get; set; }
+        public string Prescricao { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        public virtual Medico? Medico { get; set; }
+        //public virtual Paciente? Paciente { get; set; }
     }
 }

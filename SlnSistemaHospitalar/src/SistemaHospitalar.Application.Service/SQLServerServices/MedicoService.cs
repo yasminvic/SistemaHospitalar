@@ -36,14 +36,15 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return _repository.GetAll().Select(m => new MedicoDTO()
             {
                 id = m.Id,
-                especialidadeId = m.EspecialidadeId,
                 pessoaId = m.PessoaId,
+                especialidadeId = m.EspecialidadeId,
+                crm = m.CRM
             }).ToList();
         }
 
         public async Task<int> Save(MedicoDTO entity)
         {
-            if(entity.id < 0)
+            if(entity.id > 0)
             {
                 return await _repository.Update(entity.mapToEntity());
             }

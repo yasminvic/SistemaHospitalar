@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaHospitalar.Domain.Entities
 {
-    public class Recepcionista
+    public class Recepcionista 
     {
         public int Id { get; set; }
         public int PessoaId { get; set; }

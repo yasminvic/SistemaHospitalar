@@ -9,5 +9,6 @@ namespace SistemaHospitalar.Domain.IRepositories
 {
     public interface IPessoaRepository : IBaseRepository<Pessoa>
     {
+        //Pessoa GetTheLast();
     }
 }

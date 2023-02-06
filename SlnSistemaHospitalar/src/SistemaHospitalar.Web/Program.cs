@@ -21,7 +21,6 @@ builder.Services.AddScoped<IEspecialidadeMedicaService, EspecialidadeMedicaServi
 builder.Services.AddScoped<IMedicoService, MedicoService>();
 builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IPessoaService, PessoaService>();
-builder.Services.AddScoped<IProntuarioParcialService,ProntuarioParcialService>();
 builder.Services.AddScoped<IProntuarioService, ProntuarioService>();
 builder.Services.AddScoped<IRecepcionistaService, RecepcionistaService>();
 
@@ -32,7 +31,6 @@ builder.Services.AddScoped<IEspecialidadeMedicaRepository, EspecialidadeMedicaRe
 builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
-builder.Services.AddScoped<IProntuarioParcialRepository, ProntuarioParcialRepository>();
 builder.Services.AddScoped<IProntuarioRepository, ProntuarioRepository>();
 builder.Services.AddScoped<IRecepcionistaRepository, RecepcionistaRepository>();
 

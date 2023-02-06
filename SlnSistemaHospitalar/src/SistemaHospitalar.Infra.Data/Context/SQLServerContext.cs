@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.Enum;
@@ -20,6 +21,23 @@ namespace SistemaHospitalar.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Paciente>.Remove<OneToManyCascadeDeleteConvention>();
+
+            //modelBuilder.Entity<Paciente>()
+            //    .HasMany(p => p.Prontuarios)
+            //    .WithOne(pr => pr.Paciente)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<Prontuario>()
+            //    .HasOne(pr => pr.Paciente)
+            //    .WithMany(p => p.Prontuarios)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().Where(e => !e.IsOwned()).SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
+
             modelBuilder.Entity<Convenio>()
                 .HasData(
                 new {Id = 1, Nome = "Clinipam"},
@@ -52,10 +70,10 @@ namespace SistemaHospitalar.Infra.Data.Context
 
             modelBuilder.Entity<Pessoa>()
                 .HasData(
-                new {Id = 1, Nome = "Ana", Sobrenome = "da Silva", Cpf = "156.789.754-85", Telefone = "(47)3339-4832", Email = "ana@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now },
-                new { Id = 2, Nome = "Carlos", Sobrenome = "da Silva", Cpf = "456.799.466-65", Telefone = "(47)3339-1235", Email = "carlos@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Criciúma/SC", Sexo = SexoEnum.Masculino, Perfil = PerfilEnum.Padrao, CreatedOn = DateTime.Now },
-                new { Id = 3, Nome = "Maria Clara", Sobrenome = "da Silva", Cpf = "787.464.796-56", Telefone = "(47)3339-8923", Email = "maria@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Joinville/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Padrao, CreatedOn = DateTime.Now },
-                new { Id = 4, Nome = "Jupiter", Sobrenome = "da Silva", Cpf = "899.799.465-78", Telefone = "(47)3339-8965", Email = "joao@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.NãoBinario, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now }
+                new {Id = 1, Nome = "Ana", Sobrenome = "da Silva", Cpf = "156.789.754-85", Rg = "7.654.852", Telefone = "(47)3339-4832", Email = "ana@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now },
+                new { Id = 2, Nome = "Carlos", Sobrenome = "da Silva", Cpf = "456.799.466-65", Rg = "7.654.852", Telefone = "(47)3339-1235", Email = "carlos@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Criciúma/SC", Sexo = SexoEnum.Masculino, Perfil = PerfilEnum.Padrao, CreatedOn = DateTime.Now },
+                new { Id = 3, Nome = "Maria Clara", Sobrenome = "da Silva", Cpf = "787.464.796-56", Rg = "7.654.852", Telefone = "(47)3339-8923", Email = "maria@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Joinville/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Padrao, CreatedOn = DateTime.Now },
+                new { Id = 4, Nome = "Jupiter", Sobrenome = "da Silva", Cpf = "899.799.465-78", Rg = "7.654.852", Telefone = "(47)3339-8965", Email = "joao@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.NãoBinario, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now }
 
                 );
 
@@ -84,13 +102,8 @@ namespace SistemaHospitalar.Infra.Data.Context
 
             modelBuilder.Entity<Prontuario>()
                 .HasData(
-                new { Id = 1, PacienteId = 1}
-                );
-
-            modelBuilder.Entity<ProntuarioParcial>()
-                .HasData(
-                new {Id = 1, ProntuarioId = 1, MedicoId = 1, QueixaPrincipal = "Dor na barriga", Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", HistoricoFamiliar = "Ninguém na família com sistomas parecidos", ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", Condutas = "Solicito EDA, PHmetria e exames laboratoriais ", HipoteseDiagnostica = "K29 - Gastrite e duodenite", Prescricao = "Annita de 12/12hs por 3 dias", CreatedOn = DateTime.Now},
-                new { Id = 2, ProntuarioId = 1, MedicoId = 1, QueixaPrincipal = "Dor de cabeça", Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", HistoricoFamiliar = "Ninguém na família com sistomas parecidos", ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", Condutas = "Solicito EDA, PHmetria e exames laboratoriais ", HipoteseDiagnostica = "Dor de cabeça normal", Prescricao = "Dipirona de 12/12hs por 3 dias", CreatedOn = DateTime.Now }
+                new {Id = 1, PacienteId = 1, MedicoId = 1, QueixaPrincipal = "Dor na barriga", Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", HistoricoFamiliar = "Ninguém na família com sistomas parecidos", ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", Condutas = "Solicito EDA, PHmetria e exames laboratoriais ", HipoteseDiagnostica = "K29 - Gastrite e duodenite", Prescricao = "Annita de 12/12hs por 3 dias", CreatedOn = DateTime.Now},
+                new { Id = 2, PacienteId = 1, MedicoId = 1, QueixaPrincipal = "Dor de cabeça", Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", HistoricoFamiliar = "Ninguém na família com sistomas parecidos", ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", Condutas = "Solicito EDA, PHmetria e exames laboratoriais ", HipoteseDiagnostica = "Dor de cabeça normal", Prescricao = "Dipirona de 12/12hs por 3 dias", CreatedOn = DateTime.Now }
                 );
         }
 
@@ -105,7 +118,6 @@ namespace SistemaHospitalar.Infra.Data.Context
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<Recepcionista> Recepcionistas { get; set; }
         public DbSet<Prontuario> Prontuarios { get; set; }
-        public DbSet<ProntuarioParcial> ProntuariosParciais { get; set; }
 
         #endregion
     }

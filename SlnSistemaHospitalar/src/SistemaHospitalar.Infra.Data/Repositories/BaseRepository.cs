@@ -45,5 +45,10 @@ namespace SistemaHospitalar.Infra.Data.Repositories
             _context.Set<T>().Update(entity);
             return await _context.SaveChangesAsync();
         }
+
+        //public T TheLast()
+        //{
+        //   return _context.Set<T>().Last();
+        //}
     }
 }

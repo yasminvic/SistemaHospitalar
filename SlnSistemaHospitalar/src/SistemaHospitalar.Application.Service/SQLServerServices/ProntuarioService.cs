@@ -1,5 +1,4 @@
-﻿
-using SistemaHospitalar.Domain.DTO;
+﻿using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Domain.IServices;
 using System;
@@ -26,8 +25,8 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
 
         public async Task<ProntuarioDTO> FindById(int id)
         {
-            var p = new ProntuarioDTO();
-            return p.mapToDTO(await _repository.FindById(id));
+            var pr = new ProntuarioDTO();
+            return pr.mapToDTO(await _repository.FindById(id));
         }
 
         public List<ProntuarioDTO> GetAll()
@@ -35,13 +34,21 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return _repository.GetAll().Select(p => new ProntuarioDTO()
             {
                 id = p.Id,
-                pacienteId = p.PacienteId
+                pacienteId = p.PacienteId,
+                medicoId = p.MedicoId,
+                queixaPrincipal = p.QueixaPrincipal,
+                descricao = p.Descricao,
+                historicoFamiliar = p.HistoricoFamiliar,
+                exameFisico = p.ExameFisico,
+                condutas = p.Condutas,
+                prescricao = p.Prescricao,
+                createdOn = p.CreatedOn,
             }).ToList();
         }
 
         public async Task<int> Save(ProntuarioDTO entity)
         {
-            if (entity.id < 0)
+            if (entity.id > 0)
             {
                 return await _repository.Update(entity.mapToEntity());
             }

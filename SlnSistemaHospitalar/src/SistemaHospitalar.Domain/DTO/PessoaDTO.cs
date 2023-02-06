@@ -13,6 +13,7 @@ namespace SistemaHospitalar.Domain.DTO
         public string nome { get; set; }
         public string sobrenome { get; set; }
         public string cpf { get; set; }
+        public string rg { get; set; }
         public string telefone { get; set; }
         public string email { get; set; }
         public DateTime dataNascimento { get; set; }
@@ -20,6 +21,7 @@ namespace SistemaHospitalar.Domain.DTO
         public SexoEnum sexo { get; set; }
         public PerfilEnum perfil { get; set; }
         public DateTime createdOn { get; set; }
+
 
         public PessoaDTO mapToDTO(Pessoa pessoa)
         {
@@ -29,6 +31,7 @@ namespace SistemaHospitalar.Domain.DTO
                 nome = pessoa.Nome,
                 sobrenome = pessoa.Sobrenome,
                 cpf = pessoa.Cpf,
+                rg = pessoa.Rg,
                 telefone = pessoa.Telefone,
                 email = pessoa.Email,
                 dataNascimento = pessoa.DataNascimento,
@@ -47,6 +50,7 @@ namespace SistemaHospitalar.Domain.DTO
                 Nome = nome,
                 Sobrenome = sobrenome,
                 Cpf = cpf,
+                Rg = rg,
                 Telefone = telefone,
                 Email = email,
                 DataNascimento = dataNascimento,

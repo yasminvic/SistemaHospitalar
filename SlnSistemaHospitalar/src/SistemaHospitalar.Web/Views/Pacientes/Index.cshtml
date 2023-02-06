@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaHospitalar.Domain.DTO.ConvenioDTO>
+﻿@model IEnumerable<SistemaHospitalar.Domain.DTO.PacienteDTO>
 
 @if (TempData["MensagemSucesso"] != null)
 {
@@ -17,8 +17,10 @@
 }
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Add Convênio</a>
+    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Add Pessoa</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +28,13 @@
                 @Html.DisplayNameFor(model => model.id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nome)
+                @Html.DisplayNameFor(model => model.pessoaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.convenioId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.situacao)
             </th>
             <th></th>
         </tr>
@@ -39,7 +47,13 @@
                     @Html.DisplayFor(modelItem => item.id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.nome)
+                    @Html.DisplayFor(modelItem => item.pessoaId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.convenioId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.situacao)
                 </td>
                 <td>
                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">Edit</a> |
@@ -71,6 +85,16 @@
                 closeMsgModalMessage();
             });
         }
+
+            $(document).ready(()=>{
+                $.ajax({
+                    url: '../Pessoas/Create',
+                    dataType: 'html',
+                    success: (response) =>{
+                        $('#modal-body').html(response)
+                    }
+                });
+            });
     </script>
 }
 

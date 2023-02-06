@@ -18,5 +18,10 @@ namespace SistemaHospitalar.Domain.Repositories
             : base(context)
         {
         }
+
+        //public Pessoa GetTheLast()
+        //{
+        //    return _context.Pessoa.OrderBy(p => p.Id).Last();
+        //}
     }
 }
