@@ -1,97 +1,94 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IServices;
-using SistemaHospitalar.Infra.Data.Context;
 using SistemaHospitalar.Web.Models;
 
 namespace SistemaHospitalar.Web.Controllers
 {
-    public class ConveniosController : Controller
+    public class RecepcionistasController : Controller
     {
-        private readonly IConvenioService _service;
+        private readonly IRecepcionistaService _service;
+        private readonly IPessoaService _pessoaService;
 
-        public ConveniosController(IConvenioService service)
+        public RecepcionistasController(IRecepcionistaService service, IPessoaService pessoaService)
         {
             _service = service;
+            _pessoaService = pessoaService;
         }
 
 
-        // GET: ConveniosController
+        // GET: RecepcionistasController
         public ActionResult Index()
         {
-            var conv = _service.GetAll();
-            return View(conv);
+            var recepcionista = _service.GetAll();
+            return View(recepcionista);
         }
 
-        // GET: ConveniosController/Details/5
+        // GET: RecepcionistasController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var conv = await _service.FindById(id);
-            return View(conv);
+            var recepcionista = await _service.FindById(id);
+            return View(recepcionista);
         }
 
-        // GET: ConveniosController/Create
+        // GET: RecepcionistasController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ConveniosController/Create
+        // POST: RecepcionistasController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ConvenioDTO convenio)
+
+        public async Task<IActionResult> Create(RecepcionistaDTO recepcionista)
         {
-            try
+            var pessoa = _pessoaService.GetAll().Last();
+            recepcionista.pessoaId = pessoa.id;
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    await _service.Save(convenio);
-                    TempData["MensagemSucesso"] = "Convênio adicionado com sucesso";
-                    return RedirectToAction(nameof(Index));
-                }
+
+                await _service.Save(recepcionista);
+                TempData["MensagemSucesso"] = "Recepcionista adicionada(o) com sucesso";
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                TempData["MensagemErro"] = "Erro ao adicionar convênio";
-                return View();
-            }
+            TempData["MensagemErro"] = "Falha ao alterar Recepcionista ";
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var conv = await _service.FindById(id);
-            return View(conv);
+            var recepcionista = await _service.FindById(id);
+            return View(recepcionista);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, ConvenioDTO convenio)
+        public async Task<IActionResult> Edit(int id, RecepcionistaDTO recepcionista)
         {
-            if(id == null || convenio == null)
+            if (id == null || recepcionista == null)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                await _service.Save(convenio);
-                TempData["MensagemSucesso"] = "Convênio alterado com sucesso";
+                await _service.Save(recepcionista);
+                TempData["MensagemSucesso"] = "Registro alterado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData["MensagemErro"] = "Erro ao alterar convênio";
+            TempData["MensagemErro"] = "Erro ao alterar registro";
             return RedirectToAction(nameof(Index));
-    
+
         }
 
         [HttpPost]

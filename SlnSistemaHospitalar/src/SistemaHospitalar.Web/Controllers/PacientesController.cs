@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IServices;
+using SistemaHospitalar.Web.Models;
 
 namespace SistemaHospitalar.Web.Controllers
 {
@@ -42,25 +43,26 @@ namespace SistemaHospitalar.Web.Controllers
         // GET: PacientesController/Create
         public ActionResult Create()
         {
-            ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
+            //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
             ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
             return View();
         }
 
         // POST: PacientesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(PacienteDTO paciente)
+
+        public async Task<IActionResult> Create(PacienteDTO paciente)
         {
             var pessoa = _pessoaService.GetAll().Last();
-                if (ModelState.IsValid)
-                {
-                    paciente.pessoaId = pessoa.id;
-                    await _service.Save(paciente);
-                    TempData["MensagemSucesso"] = "Registro adicionado com sucesso";
-                    return RedirectToAction(nameof(Index));
-                }
-                ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
+            paciente.pessoaId = pessoa.id;
+            if (ModelState.IsValid)
+            {
+                    
+                await _service.Save(paciente);
+                TempData["MensagemSucesso"] = "Paciente adicionado com sucesso";
+                return RedirectToAction(nameof(Index));
+            }
+                //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
                 ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
                 return RedirectToAction(nameof(Index));
         }
@@ -102,25 +104,34 @@ namespace SistemaHospitalar.Web.Controllers
 
         }
 
-        // GET: PacientesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PacientesController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<JsonResult> Delete(int? id)
         {
+            var retDel = new ReturnJson
+            {
+                status = "Success",
+                code = "200"
+            };
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (await _service.Delete(id ?? 0) <= 0)
+                {
+                    retDel = new ReturnJson
+                    {
+                        status = "Error",
+                        code = "400"
+                    };
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                retDel = new ReturnJson
+                {
+                    status = ex.Message,
+                    code = "500"
+                };
             }
+            return Json(retDel);
         }
     }
 }

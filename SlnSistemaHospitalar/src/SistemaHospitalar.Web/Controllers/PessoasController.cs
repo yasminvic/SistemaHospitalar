@@ -2,6 +2,7 @@
 using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IServices;
 using SistemaHospitalar.Web.Models;
+using SistemaHospitalar.Domain.Entities;
 
 namespace SistemaHospitalar.Web.Controllers
 {
@@ -44,28 +45,36 @@ namespace SistemaHospitalar.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PessoaDTO pessoa)
         {
-            var retDel = new ReturnJson
-            {
-                status = "Success",
-                code = "200"
-            };
 
             pessoa.createdOn = DateTime.Now;
             if (ModelState.IsValid)
             {
-                //await _service.Save(pessoa);
-                if(await _service.Save(pessoa) <= 0)
-                {
-                    retDel = new ReturnJson
-                    {
-                        status = "Error",
-                        code = "400"
-                    };
-                }
-                
-            }
+                await _service.Save(pessoa);
+                TempData["MensagemSucesso"] = "Registro cadastrado com sucesso";
 
-            return PartialView("Create", "Pacientes");
+                if(pessoa.perfil == PerfilEnum.Medico)
+                {
+                    return RedirectToAction("Create", "Medicos");
+                }
+
+                if (pessoa.perfil == PerfilEnum.Paciente)
+                {
+                    return RedirectToAction("Create", "Pacientes");
+                }
+
+                if (pessoa.perfil == PerfilEnum.Recepcionista)
+                {
+                    return RedirectToAction("Create", "Recepcionistas");
+                }
+
+                if (pessoa.perfil == PerfilEnum.Admin)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+            TempData["MensagemSucesso"] = "Erro ao cadastrar registro";
+            return View();
         }
 
         public async Task<PartialViewResult> Edit(int id)
@@ -94,25 +103,5 @@ namespace SistemaHospitalar.Web.Controllers
 
         }
 
-        // GET: PessoasController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PessoasController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

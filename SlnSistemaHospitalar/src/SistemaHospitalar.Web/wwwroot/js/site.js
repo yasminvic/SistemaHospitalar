@@ -7,7 +7,7 @@
 //model
 msgModalMessage = (message, origin, callback) => {
     $('#modal-origin').html(origin);
-    $('#modal-body').html(message);
+    $('#modal-corpo').html(message);
 
 
     $('#btnModalCallback').click(() => callback());

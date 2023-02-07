@@ -1,23 +1,23 @@
-﻿@model SistemaHospitalar.Domain.DTO.ConvenioDTO
+﻿@model SistemaHospitalar.Domain.DTO.RecepcionistaDTO
 
 @{
     ViewData["Title"] = "Criar";
 }
 
 <div class="text-center title-page">
-    <h1 class="display-1"><strong>Adicionar Convênio</strong></h1>
+    <h1 class="display-1"><strong>Adicionar Recepcionista</strong></h1>
 </div>                      
 
 
 
-<form asp-controller="Convenios" asp-action="Create" method="post">
+<form asp-controller="Recepcionistas" asp-action="Create" method="post">
  <div class="container">
     <div class="row justify-content-center">
     <div class="col-3">
         <div class="form-group text-dark">
-         <label asp-for="nome" for="nome" class="color-label">Convênio</label>
-        <input asp-for="nome" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Convênio">
-        <span asp-validation-for="nome" class="text-danger"></span>  
+         <label asp-for="bloco" for="bloco" class="color-label">Bloco</label>
+        <input asp-for="bloco" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Informe o Bloco">
+        <span asp-validation-for="bloco" class="text-danger"></span>  
     </div>
             <div class="form-group mt-3">
                 <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />

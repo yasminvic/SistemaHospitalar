@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaHospitalar.Domain.DTO
 {
-    public class RecepcionistaDTO : PessoaDTO
+    public class RecepcionistaDTO
     {
         public int id { get; set; }
         public int pessoaId { get; set; }

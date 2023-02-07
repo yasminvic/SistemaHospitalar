@@ -18,10 +18,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             _repository = enderecoRepository;
         }
 
-        public async Task<int> Delete(EnderecoDTO entity)
+        public async Task<int> Delete(int id)
         {
-            return await _repository.Delete(entity.mapToEntity());
+            var entity = await _repository.FindById(id);
+            return await _repository.Delete(entity);
         }
+
 
         public async Task<EnderecoDTO> FindById(int id)
         {

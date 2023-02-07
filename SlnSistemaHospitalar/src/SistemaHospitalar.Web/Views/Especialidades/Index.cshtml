@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaHospitalar.Domain.DTO.ConvenioDTO>
+﻿@model IEnumerable<SistemaHospitalar.Domain.DTO.EspecialidadeMedicaDTO>
 
 @if (TempData["MensagemSucesso"] != null)
 {
@@ -17,7 +17,7 @@
 }
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Add Convênio</a>
+    <a class="btn btn-primary" asp-action="Create">Add Especialidade</a>
 </p>
 <table class="table">
     <thead>
@@ -54,7 +54,7 @@
 @section Scripts {
     <script>
             const deleteCategory = (idParam) => {
-                    msgModalMessage(`Deseja realmente excluir o Convênio ${idParam}?`, 'Convênio',() => {
+                    msgModalMessage(`Deseja realmente excluir a Especialidade ${idParam}?`, 'Especialidade',() => {
                         $.ajax({
                             url: `@Url.Action("Delete")`,
                             method: 'POST',
@@ -63,7 +63,7 @@
                             },
                             success: (resp) => {
                                 if(resp.code == '200') {
-                                    liveToastMessage(`O Convênio ${idParam} foi excluído.`, 'Convênio');
+                                    liveToastMessage(`A Especialidade ${idParam} foi excluído.`, 'Especialidade');
                                     setTimeout(()=>{window.location.reload();},4000);
                                 }
                             }

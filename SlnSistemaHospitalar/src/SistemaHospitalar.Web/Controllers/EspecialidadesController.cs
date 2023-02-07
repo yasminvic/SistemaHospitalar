@@ -1,97 +1,94 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IServices;
-using SistemaHospitalar.Infra.Data.Context;
 using SistemaHospitalar.Web.Models;
 
 namespace SistemaHospitalar.Web.Controllers
 {
-    public class ConveniosController : Controller
+    public class EspecialidadesController : Controller
     {
-        private readonly IConvenioService _service;
+        private readonly IEspecialidadeMedicaService _service;
 
-        public ConveniosController(IConvenioService service)
+        public EspecialidadesController(IEspecialidadeMedicaService service)
         {
             _service = service;
         }
 
 
-        // GET: ConveniosController
+        // GET: EspecialidadesController
         public ActionResult Index()
         {
             var conv = _service.GetAll();
             return View(conv);
         }
 
-        // GET: ConveniosController/Details/5
+        // GET: EspecialidadesController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var conv = await _service.FindById(id);
-            return View(conv);
+            var esp = await _service.FindById(id);
+            return View(esp);
         }
 
-        // GET: ConveniosController/Create
+        // GET: EspecialidadesController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ConveniosController/Create
+        // POST: EspecialidadesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ConvenioDTO convenio)
+        public async Task<ActionResult> Create(EspecialidadeMedicaDTO especialidade)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _service.Save(convenio);
-                    TempData["MensagemSucesso"] = "Convênio adicionado com sucesso";
+                    await _service.Save(especialidade);
+                    TempData["MensagemSucesso"] = "Especialidade adicionada com sucesso";
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                TempData["MensagemErro"] = "Erro ao adicionar convênio";
+                TempData["MensagemErro"] = "Erro ao adicionar especialidade";
                 return View();
             }
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var conv = await _service.FindById(id);
-            return View(conv);
+            var esp = await _service.FindById(id);
+            return View(esp);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, ConvenioDTO convenio)
+        public async Task<IActionResult> Edit(int id, EspecialidadeMedicaDTO especialidade)
         {
-            if(id == null || convenio == null)
+            if (id == null || especialidade == null)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                await _service.Save(convenio);
-                TempData["MensagemSucesso"] = "Convênio alterado com sucesso";
+                await _service.Save(especialidade);
+                TempData["MensagemSucesso"] = "Especialidade alterada com sucesso";
                 return RedirectToAction(nameof(Index));
             }
 
-            TempData["MensagemErro"] = "Erro ao alterar convênio";
+            TempData["MensagemErro"] = "Erro ao alterar especialidade";
             return RedirectToAction(nameof(Index));
-    
+
         }
 
         [HttpPost]

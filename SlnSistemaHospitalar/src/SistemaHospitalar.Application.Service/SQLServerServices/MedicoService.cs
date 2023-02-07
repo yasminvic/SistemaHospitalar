@@ -20,10 +20,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             _repository = repository;
         }
 
-        public async Task<int> Delete(MedicoDTO entity)
+        public async Task<int> Delete(int id)
         {
-            return await _repository.Delete(entity.mapToEntity());
+            var entity = await _repository.FindById(id);
+            return await _repository.Delete(entity);
         }
+
 
         public async Task<MedicoDTO> FindById(int id)
         {

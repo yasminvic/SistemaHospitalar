@@ -1,0 +1,63 @@
+﻿@using SistemaHospitalar.Domain.Entities
+@using SistemaHospitalar.Domain.Enum
+@model SistemaHospitalar.Domain.DTO.MedicoDTO
+
+@{
+    ViewData["Title"] = "Criar";
+}
+
+<div class="text-center title-page">
+    <h1 class="display-1"><strong>Adicionar Medico</strong></h1>
+</div>                      
+
+<form asp-controller="Medicos" asp-action="Create" method="post">
+ <div class="container">
+    <div class="row justify-content-center">
+    <div class="col-3">
+        <div class="form-group text-dark">
+        <label asp-for="crm" for="crm" class="color-label">CRM</label>
+<input asp-for="crm" type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Informe o CRM">
+<span asp-validation-for="crm" class="text-danger"></span>  
+
+        <label autofocus asp-for="especialidade" for="especialidadeId" class="color-label">Especialidade:</label>
+        <select asp-for="especialidadeId" class="form-control" asp-items="ViewBag.EspecialidadeId"></select>
+        <span asp-validation-for="especialidadeId" class="text-danger"></span> 
+
+
+    </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />
+            </div>
+         </div>
+    
+    </div>
+ </div> 
+                                   
+</form>
+
+<div>
+    <a class="btn btn-dark" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(()=>{
+            $.ajax({
+            url: '../Pessoas/Create',
+            dataType: 'html',
+            success: (resp) =>{
+                $('#form-pessoa').html(resp);
+                $('#modal-body').html('Médico')
+                }
+            });
+            
+        })
+    </script>
+}
+
+
+

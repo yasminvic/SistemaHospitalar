@@ -8,7 +8,9 @@ namespace SistemaHospitalar.Domain.Entities
 {
     public enum PerfilEnum
     {
-        Padrao = 0,
-        Admin = 1
+        Admin = 0,
+        Medico = 1,
+        Paciente = 2,
+        Recepcionista = 3
     }
 }
