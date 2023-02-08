@@ -25,13 +25,18 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return await _repository.Delete(entity);
         }
 
-        public List<ConvenioDTO> GetAll()
+        public async Task<List<ConvenioDTO>> GetAll()
         {
-            return _repository.GetAll().Select(c => new ConvenioDTO()
-                                                {
-                                                    id = c.Id,
-                                                    nome = c.Nome
-                                                }).ToList();
+            List<ConvenioDTO> listaDTO = new List<ConvenioDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
+            {
+                var conv = new ConvenioDTO();
+                listaDTO.Add(conv.mapToDTO(item));
+            }
+
+            return listaDTO;
         }
 
         public async Task<int> Save(ConvenioDTO entity)

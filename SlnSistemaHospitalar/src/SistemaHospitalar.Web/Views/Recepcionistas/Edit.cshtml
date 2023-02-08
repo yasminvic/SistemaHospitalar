@@ -1,4 +1,4 @@
-﻿@model SistemaHospitalar.Domain.DTO.ConvenioDTO
+﻿@model SistemaHospitalar.Domain.DTO.RecepcionistaDTO
 
 @{
     ViewData["Title"] = "Editar";
@@ -9,16 +9,24 @@
     <p class="display-6"></p>
 </div>                      
 
+<p>
+    <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
+</p>
 
 
-<form asp-controller="Convenios" asp-action="Edit" method="post">
+<form asp-controller="Recepcionistas" asp-action="Edit" method="post">
  <div class="container">
     <div class="row justify-content-center">
     <div class="col-3">
         <div class="form-group">
-         <label asp-for="nome" for="nome" class="color-label">Categoria</label>
-        <input asp-for="nome" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Categoria literária">
-        <span asp-validation-for="nome" class="text-danger"></span>    
+
+        <input type="hidden" asp-for="id" for="id" class="form-control" aria-describedby="emailHelp">
+        <input type="hidden" asp-for="pessoaId" class="form-control" asp-items="ViewBag.pessoaId">
+
+
+         <label asp-for="bloco" for="bloco" class="color-label">Bloco:</label>
+        <input asp-for="bloco" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Informe o bloco">
+        <span asp-validation-for="bloco" class="text-danger"></span>    
     </div>
         <div class="buttons-edit-create form-group">
             <input type="submit" class="btn btn-warning w-100 btn-block" id="button-editar" value="Editar">

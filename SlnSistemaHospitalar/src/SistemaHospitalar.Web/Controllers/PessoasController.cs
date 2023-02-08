@@ -74,7 +74,7 @@ namespace SistemaHospitalar.Web.Controllers
 
             }
             TempData["MensagemSucesso"] = "Erro ao cadastrar registro";
-            return View();
+            return View("Index", "Home");
         }
 
         public async Task<PartialViewResult> Edit(int id)

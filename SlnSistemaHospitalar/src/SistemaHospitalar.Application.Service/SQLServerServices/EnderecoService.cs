@@ -1,6 +1,7 @@
 ﻿using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Domain.IServices;
+using SistemaHospitalar.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
     public class EnderecoService : IEnderecoService
     {
         private readonly IEnderecoRepository _repository;
+        private readonly IPessoaRepository _pessoaRepository;
 
-        public EnderecoService(IEnderecoRepository enderecoRepository)
+        public EnderecoService(IEnderecoRepository enderecoRepository, IPessoaRepository pessoaRepository)
         {
             _repository = enderecoRepository;
+            _pessoaRepository = pessoaRepository;   
         }
 
         public async Task<int> Delete(int id)
@@ -31,19 +34,18 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return end.mapToDTO(await _repository.FindById(id));
         }
 
-        public List<EnderecoDTO> GetAll()
+        public async Task<List<EnderecoDTO>> GetAll()
         {
-            return _repository.GetAll().Select(e => new EnderecoDTO()
+            List<EnderecoDTO> listaDTO = new List<EnderecoDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
             {
-                id = e.Id,
-                pessoaId = e.PessoaId,
-                cep = e.Cep,
-                rua = e.Rua,
-                numero = e.Numero,
-                bairro = e.Bairro,
-                cidade = e.Cidade,
-                uf = e.UF
-            }).ToList();
+                var pac = new EnderecoDTO();
+                listaDTO.Add(pac.mapToDTO(item));
+            }
+
+            return listaDTO;
         }
 
         public async Task<int> Save(EnderecoDTO entity)

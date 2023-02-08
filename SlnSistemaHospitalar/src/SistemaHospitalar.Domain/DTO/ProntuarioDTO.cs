@@ -22,6 +22,7 @@ namespace SistemaHospitalar.Domain.DTO
         public DateTime createdOn { get; set; }
 
         public virtual MedicoDTO? medico { get; set; }
+        public virtual PacienteDTO? paciente { get; set; }
 
         public ProntuarioDTO mapToDTO(Prontuario prontuario)
         {

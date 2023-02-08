@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaHospitalar.Domain.DTO;
+using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.IServices;
 using SistemaHospitalar.Web.Models;
 
@@ -21,9 +22,9 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: MedicosController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var medico = _service.GetAll();
+            var medico = await _service.GetAll();
             return View(medico);
         }
 
@@ -40,9 +41,9 @@ namespace SistemaHospitalar.Web.Controllers
         }
 
         // GET: MedicosController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewData["especialidadeId"] = new SelectList(_especialidadeService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["especialidadeId"] = new SelectList(await _especialidadeService.GetAll(), "id", "nome", "Selecione...");
             return View();
         }
 
@@ -51,8 +52,19 @@ namespace SistemaHospitalar.Web.Controllers
 
         public async Task<IActionResult> Create(MedicoDTO medico)
         {
-            var pessoa = _pessoaService.GetAll().Last();
-            medico.pessoaId = pessoa.id;
+            var pessoas = await _pessoaService.GetAll();
+
+            int count = 0;
+            foreach (var item in pessoas)
+            {
+                count++;
+                if (count == pessoas.Count)
+                {
+                    //ultima Pessoa
+                    medico.pessoaId = item.id;
+                }
+            }
+            
             if (ModelState.IsValid)
             {
 
@@ -60,7 +72,7 @@ namespace SistemaHospitalar.Web.Controllers
                 TempData["MensagemSucesso"] = "Médico adicionado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["especialidadeId"] = new SelectList(_especialidadeService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["especialidadeId"] = new SelectList(await _especialidadeService.GetAll(), "id", "nome", "Selecione...");
             return RedirectToAction(nameof(Index));
         }
 
@@ -72,7 +84,7 @@ namespace SistemaHospitalar.Web.Controllers
             }
 
             var medico = await _service.FindById(id);
-            ViewData["especialidadeId"] = new SelectList(_especialidadeService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["especialidadeId"] = new SelectList(await _especialidadeService.GetAll(), "id", "nome", "Selecione...");
             return View(medico);
         }
 

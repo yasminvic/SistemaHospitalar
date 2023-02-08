@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaHospitalar.Domain.DTO;
+using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.IServices;
+using SistemaHospitalar.Web.Helper;
 using SistemaHospitalar.Web.Models;
 
 namespace SistemaHospitalar.Web.Controllers
@@ -24,7 +26,7 @@ namespace SistemaHospitalar.Web.Controllers
         // GET: PacientesController
         public async Task<ActionResult> Index()
         {
-            var Paciente = await _service.GetAllInformation();
+            var Paciente = await _service.GetAll();
             return View(Paciente);
         }
 
@@ -41,9 +43,9 @@ namespace SistemaHospitalar.Web.Controllers
         }
 
         // GET: PacientesController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["convenioId"] = new SelectList(await _convenioService.GetAll(), "id", "nome", "Selecione...");
             return View();
         }
 
@@ -52,8 +54,19 @@ namespace SistemaHospitalar.Web.Controllers
 
         public async Task<IActionResult> Create(PacienteDTO paciente)
         {
-            var pessoa = _pessoaService.GetAll().Last();
-            paciente.pessoaId = pessoa.id;
+            var pessoas = await _pessoaService.GetAll();
+
+            int count = 0;
+            foreach (var item in pessoas)
+            {
+                count++;
+                if (count == pessoas.Count)
+                {
+                    //ultima Pessoa
+                    paciente.pessoaId = item.id;
+                }
+            }
+
             if (ModelState.IsValid)
             {
                     
@@ -61,7 +74,7 @@ namespace SistemaHospitalar.Web.Controllers
                 TempData["MensagemSucesso"] = "Paciente adicionado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
-                ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
+                ViewData["convenioId"] = new SelectList(await _convenioService.GetAll(), "id", "nome", "Selecione...");
                 return RedirectToAction(nameof(Index));
         }
 
@@ -74,7 +87,7 @@ namespace SistemaHospitalar.Web.Controllers
 
             var Paciente = await _service.FindById(id);
             //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
-            ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["convenioId"] = new SelectList(await _convenioService.GetAll(), "id", "nome", "Selecione...");
             return View(Paciente);
         }
 
@@ -96,7 +109,7 @@ namespace SistemaHospitalar.Web.Controllers
             }
 
             //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
-            ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["convenioId"] = new SelectList(await _convenioService.GetAll(), "id", "nome", "Selecione...");
             TempData["MensagemErro"] = "Erro ao alterar registro";
             return RedirectToAction(nameof(Index));
 

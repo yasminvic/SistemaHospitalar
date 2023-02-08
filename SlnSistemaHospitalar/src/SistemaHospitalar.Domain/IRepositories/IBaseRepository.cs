@@ -8,7 +8,7 @@ namespace SistemaHospitalar.Domain.IRepositories
 {
     public interface IBaseRepository<T> where T : class
     {
-        IQueryable<T> GetAll();
+        Task<List<T>> GetAll();
         Task<T> FindById(int id);
         Task<int> Save(T entity);
         Task<int> Update(T entity);

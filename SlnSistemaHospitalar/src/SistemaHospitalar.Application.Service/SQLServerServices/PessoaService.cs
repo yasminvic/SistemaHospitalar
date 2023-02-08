@@ -37,23 +37,19 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return pessoa.mapToDTO(await _repository.FindByLogin(email));
         }
 
-        public List<PessoaDTO> GetAll()
+        public async Task<List<PessoaDTO>> GetAll()
         {
-            return _repository.GetAll().Select(p => new PessoaDTO()
+            List<PessoaDTO> listaDTO = new List<PessoaDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
             {
-                id = p.Id,
-                nome = p.Nome,
-                sobrenome = p.Sobrenome,
-                email = p.Email,
-                cpf = p.Cpf,
-                rg = p.Rg,
-                telefone = p.Telefone,
-                dataNascimento = p.DataNascimento,
-                naturalidade = p.Naturalidade,
-                sexo = p.Sexo,
-                perfil = p.Perfil,
-                createdOn = p.CreatedOn
-            }).ToList();
+                var pessoa = new PessoaDTO();
+                listaDTO.Add(pessoa.mapToDTO(item));
+            }
+
+            return listaDTO;
+               
         }
 
         public async Task<int> Save(PessoaDTO entity)

@@ -29,9 +29,9 @@ namespace SistemaHospitalar.Infra.Data.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            return _context.Set<T>();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<int> Save(T entity)

@@ -11,7 +11,7 @@
 
 
 <p>
-    <a onclick="editPessoa(@Model.pessoaId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
+    <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
 </p>
 
 <form asp-controller="Pacientes" asp-action="Edit" method="post">
@@ -59,56 +59,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
     }
-
-        <script>
-                const editPessoa = (idPessoa) => {
-                        $.ajax({
-                            url: `../../Pessoas/Edit/${idPessoa}`,
-                            dataType: 'html',
-                            success: (response) =>{
-                                $('#modal-body').html(response)
-                            }
-                        });
-                }
-
-                    const editControllerPessoa = (idPessoa) =>{
-                        console.log(idPessoa);
-                        var pessoa = {
-                            id: $('#idEdit').val(),
-                            nome: $('#nomeEdit').val(),
-                            sobrenome: $('#sobrenomeEdit').val(),
-                            email: $('#emailEdit').val(),
-                            senha: $('#senhaEdit').val(),
-                            telefone: $('#telefoneEdit').val(),
-                            cpf: $('#cpfEdit').val(),
-                            rg: $('#rgEdit').val(),
-                            dataNascimento: $('#nascEdit').val(),
-                            naturalidade: $('#natEdit').val(),
-                            sexo: $('#sexoEdit').val(),
-                            perfil: $('#perfilEdit').val(),
-                            createdOn: $('#createdEdit').val(),
-                        }
-
-                        console.log(pessoa);
-
-                        $.ajax({
-                                url: `../../Pessoas/Edit/${idPessoa}`,
-                                method: 'POST',
-                                data:{
-                                    id: idPessoa,
-                                    pessoa: pessoa
-                                },
-                                success: (resp) => {
-                                    if(resp.code == '200') {
-                                        $('#formModal').modal('hide');
-                                        liveToastMessage(`Os dados pessoais foram editados.`, 'Dados Pessoais');
-                                        setTimeout(()=>{window.location.reload();},4000);
-                                    }
-                                }
-                                
-                        });
-                    }
-        </script>
+              
     }
 
 

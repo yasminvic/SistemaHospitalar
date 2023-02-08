@@ -20,6 +20,7 @@ namespace SistemaHospitalar.Domain.DTO
         public string cidade { get; set; }
         public string uf { get; set; }
 
+        public virtual Pessoa? pessoa { get; set; }
 
 
         public EnderecoDTO mapToDTO(Endereco endereco)

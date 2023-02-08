@@ -43,9 +43,9 @@ namespace SistemaHospitalar.Web.Controllers
         }
 
         // GET: ProntuariosController/Create
-        public PartialViewResult Create()
+        public async Task<PartialViewResult> Create()
         {
-            ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["pessoaId"] = new SelectList(await _pessoaService.GetAll(), "id", "nome", "Selecione...");
             return PartialView();
         }
 
@@ -75,7 +75,7 @@ namespace SistemaHospitalar.Web.Controllers
                     code = "200"
                 };
             }
-            ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
+            ViewData["pessoaId"] = new SelectList(await _pessoaService.GetAll(), "id", "nome", "Selecione...");
             return Json(retDel);
         }
 

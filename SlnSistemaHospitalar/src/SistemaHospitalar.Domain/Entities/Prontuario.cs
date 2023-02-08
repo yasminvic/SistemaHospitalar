@@ -21,6 +21,6 @@ namespace SistemaHospitalar.Domain.Entities
         public DateTime CreatedOn { get; set; }
 
         public virtual Medico? Medico { get; set; }
-        //public virtual Paciente? Paciente { get; set; }
+        public virtual Paciente? Paciente { get; set; }
     }
 }

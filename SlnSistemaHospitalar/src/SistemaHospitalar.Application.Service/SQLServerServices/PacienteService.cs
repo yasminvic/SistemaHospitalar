@@ -1,4 +1,5 @@
 ﻿using SistemaHospitalar.Domain.DTO;
+using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Domain.IServices;
 using System;
@@ -23,6 +24,8 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
         public async Task<int> Delete(int id)
         {
             var entity = await _repository.FindById(id);
+            var pessoa = await _pessoaRepository.FindById(entity.PessoaId);
+            await _pessoaRepository.Delete(pessoa);
             return await _repository.Delete(entity);
         }
 
@@ -32,16 +35,16 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return p.mapToDTO( await _repository.FindById(id));
         }
 
-        public async Task<List<PacienteDTO>> GetAllInformation()
+        public async Task<List<PacienteDTO>> GetAll()
         {
+            List<PacienteDTO> listaDTO = new List<PacienteDTO>();
 
-            var listaDTO = _repository.GetAll().Select(p => new PacienteDTO()
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
             {
-                id = p.Id,
-                pessoaId = p.PessoaId,
-                convenioId = p.ConvenioId,
-                situacao = p.Situacao,
-            }).ToList();
+                var pac = new PacienteDTO();
+                listaDTO.Add(pac.mapToDTO(item));
+            }
 
             foreach (var paciente in listaDTO)
             {
@@ -62,11 +65,6 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             {
                 return await _repository.Save(entity.mapToEntity());
             }
-        }
-
-        public List<PacienteDTO> GetAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }

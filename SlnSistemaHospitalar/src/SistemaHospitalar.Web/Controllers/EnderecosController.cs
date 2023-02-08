@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaHospitalar.Domain.DTO;
+using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.IServices;
 using SistemaHospitalar.Web.Models;
 
@@ -46,13 +47,30 @@ namespace SistemaHospitalar.Web.Controllers
 
         public async Task<JsonResult> Create(EnderecoDTO endereco)
         {
+            
+
             var retDel = new ReturnJson
             {
                 status = "Error",
                 code = "400"
             };
-            var pessoa = _pessoaService.GetAll().Last();
-            endereco.pessoaId = pessoa.id;
+
+            //if(id = 0){
+
+
+            var pessoas = await _pessoaService.GetAll();
+
+            int count = 0;
+            foreach (var item in pessoas)
+            {
+                count++;
+                if (count == pessoas.Count)
+                {
+                    //ultima Pessoa
+                    endereco.pessoaId = item.id;
+                }
+            }
+
             if (ModelState.IsValid)
             {
 

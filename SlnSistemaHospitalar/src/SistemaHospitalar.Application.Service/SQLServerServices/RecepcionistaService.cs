@@ -1,6 +1,7 @@
 ﻿using SistemaHospitalar.Domain.DTO;
 using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Domain.IServices;
+using SistemaHospitalar.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
     public class RecepcionistaService : IRecepcionistaService
     {
         private readonly IRecepcionistaRepository _repository;
+        private readonly IPessoaRepository _pessoaRepository;
 
-        public RecepcionistaService(IRecepcionistaRepository repository)
+        public RecepcionistaService(IRecepcionistaRepository repository, IPessoaRepository pessoaRepository)
         {
             _repository = repository;
+            _pessoaRepository = pessoaRepository;
         }
 
         public async Task<int> Delete(int id)
@@ -31,14 +34,24 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return r.mapToDTO(await _repository.FindById(id));
         }
 
-        public List<RecepcionistaDTO> GetAll()
+        public async Task<List<RecepcionistaDTO>> GetAll()
         {
-            return _repository.GetAll().Select(r => new RecepcionistaDTO()
+            List<RecepcionistaDTO> listaDTO = new List<RecepcionistaDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
             {
-                id = r.Id,
-                pessoaId = r.PessoaId,
-                bloco = r.Bloco
-            }).ToList();
+                var rec = new RecepcionistaDTO();
+                listaDTO.Add(rec.mapToDTO(item));
+            }
+
+            foreach (var recepcionista in listaDTO)
+            {
+                var pessoadto = new PessoaDTO();
+                recepcionista.pessoa = pessoadto.mapToDTO(await _pessoaRepository.FindById(recepcionista.pessoaId));
+            }
+
+            return listaDTO;
         }
 
         public async Task<int> Save(RecepcionistaDTO entity)

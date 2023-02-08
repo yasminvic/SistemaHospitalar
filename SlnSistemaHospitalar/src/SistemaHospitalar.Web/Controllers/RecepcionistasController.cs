@@ -19,9 +19,9 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: RecepcionistasController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var recepcionista = _service.GetAll();
+            var recepcionista = await _service.GetAll();
             return View(recepcionista);
         }
 
@@ -48,8 +48,19 @@ namespace SistemaHospitalar.Web.Controllers
 
         public async Task<IActionResult> Create(RecepcionistaDTO recepcionista)
         {
-            var pessoa = _pessoaService.GetAll().Last();
-            recepcionista.pessoaId = pessoa.id;
+            var pessoas = await _pessoaService.GetAll();
+
+            int count = 0;
+            foreach (var item in pessoas)
+            {
+                count++;
+                if(count == pessoas.Count)
+                {
+                    var ultimaPessoa = item;
+                    recepcionista.pessoaId = ultimaPessoa.id;
+                }
+            }
+
             if (ModelState.IsValid)
             {
 

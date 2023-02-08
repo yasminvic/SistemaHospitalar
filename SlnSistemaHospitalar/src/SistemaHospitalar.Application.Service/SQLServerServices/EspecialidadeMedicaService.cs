@@ -31,13 +31,18 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return esp.mapToDTO(await _repository.FindById(id));
         }
 
-        public List<EspecialidadeMedicaDTO> GetAll()
+        public async Task<List<EspecialidadeMedicaDTO>> GetAll()
         {
-            return _repository.GetAll().Select(e => new EspecialidadeMedicaDTO()
+            List<EspecialidadeMedicaDTO> listaDTO = new List<EspecialidadeMedicaDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
             {
-                id = e.Id,
-                nome = e.Nome
-            }).ToList();
+                var esp = new EspecialidadeMedicaDTO();
+                listaDTO.Add(esp.mapToDTO(item));
+            }
+
+            return listaDTO;
         }
 
         public async Task<int> Save(EspecialidadeMedicaDTO entity)
