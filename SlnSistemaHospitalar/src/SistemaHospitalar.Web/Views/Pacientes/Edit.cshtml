@@ -1,5 +1,4 @@
-﻿@using SistemaHospitalar.Domain.Entities
-@using SistemaHospitalar.Domain.Enum
+﻿@using SistemaHospitalar.Domain.Enum
 @model SistemaHospitalar.Domain.DTO.PacienteDTO
 
 @{
@@ -10,10 +9,10 @@
     <h1 class="display-1"><strong>Editar Paciente</strong></h1>
 </div>                      
 
-<div class="form-group mt-3">
-    <input type="submit" id="btn-pessoa-edit" value="Editar Dados Pessoais" class="btn btn-primary" />
-</div>
 
+<p>
+    <a onclick="editPessoa(@Model.pessoaId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
+</p>
 
 <form asp-controller="Pacientes" asp-action="Edit" method="post">
  <div class="container">
@@ -21,10 +20,8 @@
     <div class="col-3">
         <div class="form-group text-dark">
 
-    <div class="d-none">
-        <label  asp-for="pessoaId" for="convenioId" class="color-label">Nome da Pessoa</label>
-        <select  asp-for="pessoaId" class="form-control" asp-items="ViewBag.pessoaId"></select>
-        <span asp-validation-for="pessoaId" class="text-danger"></span>  
+        <input type="hidden" asp-for="pessoaId" class="form-control" asp-items="ViewBag.pessoaId">
+
     </div>
         <label asp-for="convenioId" for="convenioId" class="color-label">Nome do Convênio</label>
         <select asp-for="convenioId" class="form-control" asp-items="ViewBag.convenioId"></select>
@@ -64,19 +61,53 @@
     }
 
         <script>
-            $(document).ready(()=>{
-                $('#btn-pessoa-edit').click(()=>{
+                const editPessoa = (idPessoa) => {
                         $.ajax({
-                        url: `../../Pessoas/Edit/@Model.pessoaId`,
-                        dataType: 'html',
-                        success: (resp) =>{
-                            $('#modal-body').html(resp);
-                            $('#formModal').modal('show');
-                        }
-                    });
-                });
+                            url: `../../Pessoas/Edit/${idPessoa}`,
+                            dataType: 'html',
+                            success: (response) =>{
+                                $('#modal-body').html(response)
+                            }
+                        });
+                }
 
-            })
+                    const editControllerPessoa = (idPessoa) =>{
+                        console.log(idPessoa);
+                        var pessoa = {
+                            id: $('#idEdit').val(),
+                            nome: $('#nomeEdit').val(),
+                            sobrenome: $('#sobrenomeEdit').val(),
+                            email: $('#emailEdit').val(),
+                            senha: $('#senhaEdit').val(),
+                            telefone: $('#telefoneEdit').val(),
+                            cpf: $('#cpfEdit').val(),
+                            rg: $('#rgEdit').val(),
+                            dataNascimento: $('#nascEdit').val(),
+                            naturalidade: $('#natEdit').val(),
+                            sexo: $('#sexoEdit').val(),
+                            perfil: $('#perfilEdit').val(),
+                            createdOn: $('#createdEdit').val(),
+                        }
+
+                        console.log(pessoa);
+
+                        $.ajax({
+                                url: `../../Pessoas/Edit/${idPessoa}`,
+                                method: 'POST',
+                                data:{
+                                    id: idPessoa,
+                                    pessoa: pessoa
+                                },
+                                success: (resp) => {
+                                    if(resp.code == '200') {
+                                        $('#formModal').modal('hide');
+                                        liveToastMessage(`Os dados pessoais foram editados.`, 'Dados Pessoais');
+                                        setTimeout(()=>{window.location.reload();},4000);
+                                    }
+                                }
+                                
+                        });
+                    }
         </script>
     }
 

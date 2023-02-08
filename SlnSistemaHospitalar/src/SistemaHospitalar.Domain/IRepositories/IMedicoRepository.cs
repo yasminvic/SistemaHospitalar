@@ -9,5 +9,6 @@ namespace SistemaHospitalar.Domain.IRepositories
 {
     public interface IMedicoRepository : IBaseRepository<Medico>
     {
+        Task<Medico> FindByIdPessoa(int id);
     }
 }

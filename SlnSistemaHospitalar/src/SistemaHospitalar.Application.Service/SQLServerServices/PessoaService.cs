@@ -31,6 +31,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return pessoa.mapToDTO(await _repository.FindById(id));
         }
 
+        public async Task<PessoaDTO> FindByLogin(string email)
+        {
+            var pessoa = new PessoaDTO();
+            return pessoa.mapToDTO(await _repository.FindByLogin(email));
+        }
+
         public List<PessoaDTO> GetAll()
         {
             return _repository.GetAll().Select(p => new PessoaDTO()

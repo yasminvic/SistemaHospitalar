@@ -51,6 +51,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     Rg = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Naturalidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sexo = table.Column<int>(type: "int", nullable: false),
@@ -220,13 +221,13 @@ namespace SistemaHospitalar.Infra.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pessoas",
-                columns: new[] { "Id", "Cpf", "CreatedOn", "DataNascimento", "Email", "Naturalidade", "Nome", "Perfil", "Rg", "Sexo", "Sobrenome", "Telefone" },
+                columns: new[] { "Id", "Cpf", "CreatedOn", "DataNascimento", "Email", "Naturalidade", "Nome", "Perfil", "Rg", "Senha", "Sexo", "Sobrenome", "Telefone" },
                 values: new object[,]
                 {
-                    { 1, "156.789.754-85", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2070), new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2060), "ana@gmail.com", "Blumenau/SC", "Ana", 2, "7.654.852", 0, "da Silva", "(47)3339-4832" },
-                    { 2, "456.799.466-65", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2073), new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2072), "carlos@gmail.com", "Criciúma/SC", "Carlos", 1, "7.654.852", 1, "da Silva", "(47)3339-1235" },
-                    { 3, "787.464.796-56", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2074), new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2074), "maria@gmail.com", "Joinville/SC", "Maria Clara", 3, "7.654.852", 0, "da Silva", "(47)3339-8923" },
-                    { 4, "899.799.465-78", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2075), new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2075), "joao@gmail.com", "Blumenau/SC", "Jupiter", 0, "7.654.852", 2, "da Silva", "(47)3339-8965" }
+                    { 1, "156.789.754-85", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4656), new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4641), "ana@gmail.com", "Blumenau/SC", "Ana", 2, "7.654.852", "123", 0, "da Silva", "(47)3339-4832" },
+                    { 2, "456.799.466-65", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659), new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659), "carlos@gmail.com", "Criciúma/SC", "Carlos", 1, "7.654.852", "123", 1, "da Silva", "(47)3339-1235" },
+                    { 3, "787.464.796-56", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660), new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660), "maria@gmail.com", "Joinville/SC", "Maria Clara", 3, "7.654.852", "123", 0, "da Silva", "(47)3339-8923" },
+                    { 4, "899.799.465-78", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4662), new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4661), "joao@gmail.com", "Blumenau/SC", "Jupiter", 0, "7.654.852", "123", 2, "da Silva", "(47)3339-8965" }
                 });
 
             migrationBuilder.InsertData(
@@ -260,8 +261,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                 columns: new[] { "Id", "Condutas", "CreatedOn", "Descricao", "ExameFisico", "HipoteseDiagnostica", "HistoricoFamiliar", "MedicoId", "PacienteId", "Prescricao", "QueixaPrincipal" },
                 values: new object[,]
                 {
-                    { 1, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2145), "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "K29 - Gastrite e duodenite", "Ninguém na família com sistomas parecidos", 1, 1, "Annita de 12/12hs por 3 dias", "Dor na barriga" },
-                    { 2, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2146), "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "Dor de cabeça normal", "Ninguém na família com sistomas parecidos", 1, 1, "Dipirona de 12/12hs por 3 dias", "Dor de cabeça" }
+                    { 1, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4769), "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "K29 - Gastrite e duodenite", "Ninguém na família com sistomas parecidos", 1, 1, "Annita de 12/12hs por 3 dias", "Dor na barriga" },
+                    { 2, "Solicito EDA, PHmetria e exames laboratoriais ", new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4775), "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça", "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica", "Dor de cabeça normal", "Ninguém na família com sistomas parecidos", 1, 1, "Dipirona de 12/12hs por 3 dias", "Dor de cabeça" }
                 });
 
             migrationBuilder.CreateIndex(

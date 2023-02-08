@@ -59,10 +59,10 @@ namespace SistemaHospitalar.Infra.Data.Context
 
             modelBuilder.Entity<Pessoa>()
                 .HasData(
-                new {Id = 1, Nome = "Ana", Sobrenome = "da Silva", Cpf = "156.789.754-85", Rg = "7.654.852", Telefone = "(47)3339-4832", Email = "ana@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Paciente, CreatedOn = DateTime.Now },
-                new { Id = 2, Nome = "Carlos", Sobrenome = "da Silva", Cpf = "456.799.466-65", Rg = "7.654.852", Telefone = "(47)3339-1235", Email = "carlos@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Criciúma/SC", Sexo = SexoEnum.Masculino, Perfil = PerfilEnum.Medico, CreatedOn = DateTime.Now },
-                new { Id = 3, Nome = "Maria Clara", Sobrenome = "da Silva", Cpf = "787.464.796-56", Rg = "7.654.852", Telefone = "(47)3339-8923", Email = "maria@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Joinville/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Recepcionista, CreatedOn = DateTime.Now },
-                new { Id = 4, Nome = "Jupiter", Sobrenome = "da Silva", Cpf = "899.799.465-78", Rg = "7.654.852", Telefone = "(47)3339-8965", Email = "joao@gmail.com", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.NãoBinario, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now }
+                new {Id = 1, Nome = "Ana", Sobrenome = "da Silva", Cpf = "156.789.754-85", Rg = "7.654.852", Telefone = "(47)3339-4832", Email = "ana@gmail.com", Senha = "123", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Paciente, CreatedOn = DateTime.Now },
+                new { Id = 2, Nome = "Carlos", Sobrenome = "da Silva", Cpf = "456.799.466-65", Rg = "7.654.852", Telefone = "(47)3339-1235", Email = "carlos@gmail.com", Senha = "123", DataNascimento = DateTime.Now, Naturalidade = "Criciúma/SC", Sexo = SexoEnum.Masculino, Perfil = PerfilEnum.Medico, CreatedOn = DateTime.Now },
+                new { Id = 3, Nome = "Maria Clara", Sobrenome = "da Silva", Cpf = "787.464.796-56", Rg = "7.654.852", Telefone = "(47)3339-8923", Email = "maria@gmail.com", Senha = "123", DataNascimento = DateTime.Now, Naturalidade = "Joinville/SC", Sexo = SexoEnum.Feminino, Perfil = PerfilEnum.Recepcionista, CreatedOn = DateTime.Now },
+                new { Id = 4, Nome = "Jupiter", Sobrenome = "da Silva", Cpf = "899.799.465-78", Rg = "7.654.852", Telefone = "(47)3339-8965", Email = "joao@gmail.com", Senha = "123", DataNascimento = DateTime.Now, Naturalidade = "Blumenau/SC", Sexo = SexoEnum.NãoBinario, Perfil = PerfilEnum.Admin, CreatedOn = DateTime.Now }
 
                 );
 

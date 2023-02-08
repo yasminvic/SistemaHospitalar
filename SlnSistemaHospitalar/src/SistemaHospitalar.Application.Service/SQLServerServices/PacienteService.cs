@@ -12,10 +12,12 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
     public class PacienteService : IPacienteService
     {
         private readonly IPacienteRepository _repository;
+        private readonly IPessoaRepository _pessoaRepository;
 
-        public PacienteService(IPacienteRepository repository)
+        public PacienteService(IPacienteRepository repository, IPessoaRepository pessoaRepository)
         {
             _repository = repository;
+            _pessoaRepository = pessoaRepository;
         }
 
         public async Task<int> Delete(int id)
@@ -24,22 +26,30 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             return await _repository.Delete(entity);
         }
 
-
         public async Task<PacienteDTO> FindById(int id)
         {
             var p = new PacienteDTO();
             return p.mapToDTO( await _repository.FindById(id));
         }
 
-        public List<PacienteDTO> GetAll()
+        public async Task<List<PacienteDTO>> GetAllInformation()
         {
-            return _repository.GetAll().Select(p => new PacienteDTO()
+
+            var listaDTO = _repository.GetAll().Select(p => new PacienteDTO()
             {
                 id = p.Id,
                 pessoaId = p.PessoaId,
                 convenioId = p.ConvenioId,
-                situacao = p.Situacao
+                situacao = p.Situacao,
             }).ToList();
+
+            foreach (var paciente in listaDTO)
+            {
+                var pessoadto = new PessoaDTO();
+                paciente.pessoa = pessoadto.mapToDTO(await _pessoaRepository.FindById(paciente.pessoaId));
+            }
+
+            return listaDTO;
         }
 
         public async Task<int> Save(PacienteDTO entity)
@@ -52,6 +62,11 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             {
                 return await _repository.Save(entity.mapToEntity());
             }
+        }
+
+        public List<PacienteDTO> GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

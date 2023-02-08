@@ -15,7 +15,7 @@ namespace SistemaHospitalar.Domain.Entities
         public SituacaoEnum Situacao { get; set; }
         public virtual Convenio? Convenio { get; set; }
 
-        public virtual Pessoa? Pessoa { get; set; }
+        public Pessoa? Pessoa { get; set; }
         //public ICollection<Prontuario>? Prontuarios { get; set; }
     }
 }

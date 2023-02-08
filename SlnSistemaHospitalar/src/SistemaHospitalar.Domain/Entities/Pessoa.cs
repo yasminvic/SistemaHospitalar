@@ -15,6 +15,7 @@ namespace SistemaHospitalar.Domain.Entities
         public string Rg { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
+        public string Senha { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Naturalidade { get; set; }
         public SexoEnum Sexo { get; set; }

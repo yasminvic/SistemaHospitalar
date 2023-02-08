@@ -9,6 +9,6 @@ namespace SistemaHospitalar.Domain.IRepositories
 {
     public interface IPessoaRepository : IBaseRepository<Pessoa>
     {
-        //Pessoa GetTheLast();
+        Task<Pessoa> FindByLogin(string email);
     }
 }

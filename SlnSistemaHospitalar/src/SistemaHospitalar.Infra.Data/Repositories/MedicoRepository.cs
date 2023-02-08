@@ -18,5 +18,10 @@ namespace SistemaHospitalar.Domain.Repositories
             :base(context)
         {
         }
+
+        public async Task<Medico> FindByIdPessoa(int id)
+        {
+            return _context.Medicos.FirstOrDefault(m => m.PessoaId == id);
+        }
     }
 }

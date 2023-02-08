@@ -366,6 +366,10 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Sexo")
                         .HasColumnType("int");
 
@@ -386,13 +390,14 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 1,
                             Cpf = "156.789.754-85",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2070),
-                            DataNascimento = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2060),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4656),
+                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4641),
                             Email = "ana@gmail.com",
                             Naturalidade = "Blumenau/SC",
                             Nome = "Ana",
                             Perfil = 2,
                             Rg = "7.654.852",
+                            Senha = "123",
                             Sexo = 0,
                             Sobrenome = "da Silva",
                             Telefone = "(47)3339-4832"
@@ -401,13 +406,14 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 2,
                             Cpf = "456.799.466-65",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2073),
-                            DataNascimento = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2072),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659),
+                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659),
                             Email = "carlos@gmail.com",
                             Naturalidade = "Criciúma/SC",
                             Nome = "Carlos",
                             Perfil = 1,
                             Rg = "7.654.852",
+                            Senha = "123",
                             Sexo = 1,
                             Sobrenome = "da Silva",
                             Telefone = "(47)3339-1235"
@@ -416,13 +422,14 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 3,
                             Cpf = "787.464.796-56",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2074),
-                            DataNascimento = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2074),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660),
+                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660),
                             Email = "maria@gmail.com",
                             Naturalidade = "Joinville/SC",
                             Nome = "Maria Clara",
                             Perfil = 3,
                             Rg = "7.654.852",
+                            Senha = "123",
                             Sexo = 0,
                             Sobrenome = "da Silva",
                             Telefone = "(47)3339-8923"
@@ -431,13 +438,14 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 4,
                             Cpf = "899.799.465-78",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2075),
-                            DataNascimento = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2075),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4662),
+                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4661),
                             Email = "joao@gmail.com",
                             Naturalidade = "Blumenau/SC",
                             Nome = "Jupiter",
                             Perfil = 0,
                             Rg = "7.654.852",
+                            Senha = "123",
                             Sexo = 2,
                             Sobrenome = "da Silva",
                             Telefone = "(47)3339-8965"
@@ -500,7 +508,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 1,
                             Condutas = "Solicito EDA, PHmetria e exames laboratoriais ",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2145),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4769),
                             Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas",
                             ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica",
                             HipoteseDiagnostica = "K29 - Gastrite e duodenite",
@@ -514,7 +522,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 2,
                             Condutas = "Solicito EDA, PHmetria e exames laboratoriais ",
-                            CreatedOn = new DateTime(2023, 2, 6, 20, 56, 4, 507, DateTimeKind.Local).AddTicks(2146),
+                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4775),
                             Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça",
                             ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica",
                             HipoteseDiagnostica = "Dor de cabeça normal",

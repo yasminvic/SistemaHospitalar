@@ -11,6 +11,6 @@ namespace SistemaHospitalar.Domain.IServices
 {
     public interface IPessoaService : IBaseService<PessoaDTO>
     {
-        //PessoaDTO GetTheLast();
+        Task<PessoaDTO> FindByLogin(string email);
     }
 }

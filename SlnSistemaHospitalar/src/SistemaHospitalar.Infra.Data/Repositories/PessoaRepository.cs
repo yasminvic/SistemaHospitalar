@@ -1,4 +1,5 @@
-﻿using SistemaHospitalar.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaHospitalar.Domain.Entities;
 using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Infra.Data.Context;
 using SistemaHospitalar.Infra.Data.Repositories;
@@ -19,9 +20,9 @@ namespace SistemaHospitalar.Domain.Repositories
         {
         }
 
-        //public Pessoa GetTheLast()
-        //{
-        //    return _context.Pessoa.OrderBy(p => p.Id).Last();
-        //}
+        public async Task<Pessoa> FindByLogin(string email)
+        {
+            return await _context.Pessoas.FirstOrDefaultAsync(p => p.Email == email);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace SistemaHospitalar.Domain.IServices
 {
     public interface IMedicoService : IBaseService<MedicoDTO>
     {
+        Task<MedicoDTO> FindByIdPessoa(int id);
     }
 }

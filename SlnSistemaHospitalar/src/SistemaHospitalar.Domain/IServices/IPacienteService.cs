@@ -11,5 +11,6 @@ namespace SistemaHospitalar.Domain.IServices
 {
     public interface IPacienteService : IBaseService<PacienteDTO>
     {
+        Task<List<PacienteDTO>> GetAllInformation();
     }
 }

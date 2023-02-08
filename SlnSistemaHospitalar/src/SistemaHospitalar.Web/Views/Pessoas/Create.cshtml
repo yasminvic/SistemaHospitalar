@@ -73,12 +73,46 @@
  </div> 
 
 </form>
+
+<div id="form-end">
+
+</div>
  
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    @*<script>
+         const createEndereco = () =>{
+             console.log("oi");
+                 var endereco = {
+                   cep: $('#cep').val();
+                    rua: $('#rua').val();
+                    numero: $('#numero').val();
+                    bairro: $('#bairro').val();
+                    cidade: $('#cidade').val();
+                    uf: $('#uf').val();
+               };
+
+                $.ajax({
+                        url: `@Url.Action("Create")`,
+                        method: 'POST',
+                        data: {
+                            endereco: endereco
+                        },
+                        success: (resp) => {
+                            if(resp.code == '200') {
+                                liveToastMessage(`O Registro ${idParam} foi adicionado.`, 'Endereco');
+                                setTimeout(()=>{window.location.reload();},4000);
+                            }
+                        }
+                    });
+
+
+         }
+         </script>*@
 
     @*<script>
                $('#cadastrarPessoa').click(()=>{

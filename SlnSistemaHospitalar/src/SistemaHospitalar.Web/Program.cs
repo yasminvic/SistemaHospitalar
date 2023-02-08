@@ -4,6 +4,7 @@ using SistemaHospitalar.Domain.IRepositories;
 using SistemaHospitalar.Domain.IServices;
 using SistemaHospitalar.Domain.Repositories;
 using SistemaHospitalar.Infra.Data.Context;
+using SistemaHospitalar.Web.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,16 @@ builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
 builder.Services.AddScoped<IProntuarioRepository, ProntuarioRepository>();
 builder.Services.AddScoped<IRecepcionistaRepository, RecepcionistaRepository>();
 
+//Sessao
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ISessao, Sessao>();
+
+builder.Services.AddSession(o =>
+{
+    o.Cookie.HttpOnly = true;
+    o.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +61,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

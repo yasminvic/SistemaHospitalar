@@ -39,12 +39,19 @@
             <div class="form-group mt-3">
                 <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />
             </div>
+
+            
          </div>
     
+
     </div>
  </div> 
                                    
 </form>
+
+<p>
+    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Add Endereço</a>
+</p>
 
 <div>
     <a class="btn btn-dark" asp-action="Index">Back to List</a>
@@ -58,14 +65,50 @@
     <script>
         $(document).ready(()=>{
             $.ajax({
-            url: '../Pessoas/Create',
+            url: '../Enderecos/Create',
             dataType: 'html',
             success: (resp) =>{
-                $('#form-pessoa').html(resp);
+                $('#modal-body').html(resp);
+                    if(resp.code == '200') {
+                                    liveToastMessage(`O Registro ${idParam} foi adicionado.`, 'Endereço');
+                                    setTimeout(()=>{window.location.reload();},4000);
+                                }
                 }
             });
             
-        })
+        });
+
+
+        const createEndereco = () =>{
+            console.log("oi");
+                var endereco = {
+                cep: $('#cep').val(),
+                rua: $('#rua').val(),
+                numero: $('#numero').val(),
+                bairro: $('#bairro').val(),
+                cidade: $('#cidade').val(),
+                uf: $('#uf').val()
+            };
+
+            console.log(endereco);
+
+            $.ajax({
+                    url: `../Enderecos/Create`,
+                    method: 'POST',
+                    data: {
+                        endereco: endereco
+                    },
+                    success: (resp) => {
+                        if(resp.code == '200') {
+                            $('#formModal').modal('hide');
+                            liveToastMessage(`O Endereço foi adicionado.`, 'Endereco');
+                            setTimeout(()=>{window.location.reload();},4000);
+                        }
+                    }
+                });
+
+
+        };
     </script>
 }
 

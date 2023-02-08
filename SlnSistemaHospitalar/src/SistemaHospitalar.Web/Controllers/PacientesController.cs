@@ -22,9 +22,9 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: PacientesController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var Paciente = _service.GetAll();
+            var Paciente = await _service.GetAllInformation();
             return View(Paciente);
         }
 
@@ -43,7 +43,6 @@ namespace SistemaHospitalar.Web.Controllers
         // GET: PacientesController/Create
         public ActionResult Create()
         {
-            //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
             ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
             return View();
         }
@@ -62,7 +61,6 @@ namespace SistemaHospitalar.Web.Controllers
                 TempData["MensagemSucesso"] = "Paciente adicionado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
-                //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
                 ViewData["convenioId"] = new SelectList(_convenioService.GetAll(), "id", "nome", "Selecione...");
                 return RedirectToAction(nameof(Index));
         }

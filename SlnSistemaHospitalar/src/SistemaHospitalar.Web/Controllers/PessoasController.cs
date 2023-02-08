@@ -85,21 +85,24 @@ namespace SistemaHospitalar.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, PessoaDTO pessoa)
+        public async Task<JsonResult> Edit(int id, PessoaDTO pessoa)
         {
-            if (id == null || pessoa == null)
+            var retDel = new ReturnJson
             {
-                return NotFound();
-            }
+                status = "Error",
+                code = "400"
+            };
             if (ModelState.IsValid)
             {
                 await _service.Save(pessoa);
-                TempData["MensagemSucesso"] = "Registro alterado com sucesso";
-                return RedirectToAction("Edit", "Pacientes");
+                retDel = new ReturnJson
+                {
+                    status = "Success",
+                    code = "200"
+                };
             }
 
-            TempData["MensagemErro"] = "Erro ao alterar registro";
-            return RedirectToAction("Edit", "Pacientes");
+            return Json(retDel);
 
         }
 

@@ -16,6 +16,7 @@ namespace SistemaHospitalar.Domain.DTO
         public string rg { get; set; }
         public string telefone { get; set; }
         public string email { get; set; }
+        public string senha { get; set; }
         public DateTime dataNascimento { get; set; }
         public string naturalidade { get; set; }
         public SexoEnum sexo { get; set; }
@@ -34,6 +35,7 @@ namespace SistemaHospitalar.Domain.DTO
                 rg = pessoa.Rg,
                 telefone = pessoa.Telefone,
                 email = pessoa.Email,
+                senha = pessoa.Senha,
                 dataNascimento = pessoa.DataNascimento,
                 naturalidade = pessoa.Naturalidade,
                 sexo = pessoa.Sexo,
@@ -53,12 +55,18 @@ namespace SistemaHospitalar.Domain.DTO
                 Rg = rg,
                 Telefone = telefone,
                 Email = email,
+                Senha = senha,
                 DataNascimento = dataNascimento,
                 Naturalidade = naturalidade,
                 Sexo = sexo,
                 Perfil = perfil,
                 CreatedOn = createdOn,
             };
+        }
+
+        public bool ValidaSenha(string senhaPessoa)
+        {
+            return senha.Equals(senhaPessoa);
         }
     }
 }

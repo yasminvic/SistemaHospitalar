@@ -63,21 +63,55 @@
 
     }
 
-        <script>
-            $(document).ready(()=>{
-                $('#btn-pessoa-edit').click(()=>{
-                        $.ajax({
-                        url: `../../Pessoas/Edit/@Model.pessoaId`,
-                        dataType: 'html',
-                        success: (resp) =>{
-                            $('#modal-body').html(resp);
-                            $('#formModal').modal('show');
-                        }
-                    });
-                });
+            <script>
+                    const editPessoa = (idPessoa) => {
+                            $.ajax({
+                                url: `../../Pessoas/Edit/${idPessoa}`,
+                                dataType: 'html',
+                                success: (response) =>{
+                                    $('#modal-body').html(response)
+                                }
+                            });
+                    }
 
-            })
-        </script>
+                        const editControllerPessoa = (idPessoa) =>{
+                            console.log(idPessoa);
+                            var pessoa = {
+                                id: $('#idEdit').val(),
+                                nome: $('#nomeEdit').val(),
+                                sobrenome: $('#sobrenomeEdit').val(),
+                                email: $('#emailEdit').val(),
+                                senha: $('#senhaEdit').val(),
+                                telefone: $('#telefoneEdit').val(),
+                                cpf: $('#cpfEdit').val(),
+                                rg: $('#rgEdit').val(),
+                                dataNascimento: $('#nascEdit').val(),
+                                naturalidade: $('#natEdit').val(),
+                                sexo: $('#sexoEdit').val(),
+                                perfil: $('#perfilEdit').val(),
+                                createdOn: $('#createdEdit').val(),
+                            }
+
+                            console.log(pessoa);
+
+                            $.ajax({
+                                    url: `../../Pessoas/Edit/${idPessoa}`,
+                                    method: 'POST',
+                                    data:{
+                                        id: idPessoa,
+                                        pessoa: pessoa
+                                    },
+                                    success: (resp) => {
+                                        if(resp.code == '200') {
+                                            $('#formModal').modal('hide');
+                                            liveToastMessage(`Os dados pessoais foram editados.`, 'Dados Pessoais');
+                                            setTimeout(()=>{window.location.reload();},4000);
+                                        }
+                                    }
+
+                            });
+                        }
+            </script>
     }
 
 
