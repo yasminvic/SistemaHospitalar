@@ -5,8 +5,7 @@
 }
 
 <div class="text-center title-page">
-    <h1 class="display-1"><strong>Editar Especialidade</strong></h1>
-    <p class="display-6"></p>
+    <h1 class="display-1 fw-bold text-success mt-5 mb-5"><strong>Editar Especialidade Médica</strong></h1>
 </div>                      
 
 
@@ -16,23 +15,19 @@
     <div class="row justify-content-center">
     <div class="col-3">
         <div class="form-group">
-         <label asp-for="nome" for="nome" class="color-label">Especialidade</label>
-        <input asp-for="nome" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Especialidade">
+         <label asp-for="nome" for="nome" class="color-label">Especialidade:</label>
+        <input asp-for="nome" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Informe a especialidade">
         <span asp-validation-for="nome" class="text-danger"></span>    
     </div>
-        <div class="buttons-edit-create form-group">
+        <div class="buttons-edit-create form-group mt-3">
             <input type="submit" class="btn btn-warning w-100 btn-block" id="button-editar" value="Editar">
-         </div> 
+            <a class="btn btn-dark btn-block w-100 mt-3" asp-action="Index">Back to List</a> 
+        </div> 
 </div>
 
     </div>
  </div>
 </form>
-
-
-<div>
-    <a class="btn btn-dark" asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{

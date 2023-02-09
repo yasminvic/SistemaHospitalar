@@ -16,8 +16,10 @@
         </div>
 }
 
+<h1 class="display-4 mt-5 text-center">Especialidade Médica</h1>
+
 <p>
-    <a class="btn btn-primary mt-5" asp-action="Create">Add Especialidade</a>
+    <a class="btn btn-primary mt-5" asp-action="Create">Cadastrar Especialidade</a>
 </p>
 
 <div class="index table-responsive">
@@ -46,9 +48,6 @@
                 <td>
                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">
                             <img  width="30" height="30" src="~/img/editar.png">
-                        </a> 
-                        <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">
-                            <img width="30" height="30" src="~/img/file.png">
                         </a> 
                         <a class="btn btn-danger" href="#" onclick="deleteEspecialidade(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">
                             <img width="30" height="30" src="~/img/lixeira.png">
