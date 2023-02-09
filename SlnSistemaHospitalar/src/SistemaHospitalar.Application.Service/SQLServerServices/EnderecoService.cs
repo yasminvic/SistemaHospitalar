@@ -46,6 +46,26 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             }
 
             return listaDTO;
+
+        }
+
+        public async Task<List<EnderecoDTO>> ListaEndereco(int id)
+        {
+            List<EnderecoDTO> listaDTO = new List<EnderecoDTO>();
+
+            var lista = await _repository.GetAll();
+            foreach (var item in lista)
+            {
+                if(item.PessoaId == id)
+                {
+                    var pac = new EnderecoDTO();
+                    listaDTO.Add(pac.mapToDTO(item));
+                }
+                
+            }
+
+            return listaDTO;
+
         }
 
         public async Task<int> Save(EnderecoDTO entity)

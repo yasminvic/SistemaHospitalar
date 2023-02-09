@@ -2,50 +2,45 @@
 @model SistemaHospitalar.Domain.DTO.PessoaDTO
 
 
-<form asp-controller="Pessoas" asp-action="Create" method="post">
- <div class="container">
-    <div class="row justify-content-center">
-    <div class="col-3">
-        <div class="form-group text-dark">
 <label asp-for="nome" for="nome" class="color-label">Nome</label>
-<input asp-for="nome" type="text" class="form-control nomePessoa"  aria-describedby="emailHelp" placeholder="Informe o nome">
+<input asp-for="nome" type="text" class="form-control" id="nomePessoa" aria-describedby="emailHelp" placeholder="Informe o nome">
 <span asp-validation-for="nome" class="text-danger"></span>  
 
 <label asp-for="sobrenome" for="sobrenome" class="color-label">Sobrenome</label>
-<input asp-for="sobrenome" type="text" class="form-control sobrenomePessoa"  aria-describedby="emailHelp" placeholder="Informe o sobrenome">
+<input asp-for="sobrenome" type="text" class="form-control" id="sobrenomePessoa"  aria-describedby="emailHelp" placeholder="Informe o sobrenome">
 <span asp-validation-for="sobrenome" class="text-danger"></span>  
 
 <label asp-for="email" for="email" class="color-label">E-mail</label>
-<input asp-for="email" type="text" class="form-control emailPessoa"  aria-describedby="emailHelp" placeholder="Informe o email">
+<input asp-for="email" type="text" class="form-control" id="emailPessoa" aria-describedby="emailHelp" placeholder="Informe o email">
 <span asp-validation-for="email" class="text-danger"></span>  
 
 <label asp-for="senha" for="senha" class="color-label">Senha:</label>
-<input asp-for="senha" type="password" class="form-control senhaPessoa"  aria-describedby="emailHelp" placeholder="Informe a senha">
+<input asp-for="senha" type="password" class="form-control" id="senhaPessoa"  aria-describedby="emailHelp" placeholder="Informe a senha">
 <span asp-validation-for="senha" class="text-danger"></span> 
 
 <label asp-for="telefone" for="telefone" class="color-label">Telefone</label>
-<input asp-for="telefone" type="text" class="form-control telefonePessoa"  aria-describedby="emailHelp" placeholder="Informe o telefone">
+<input asp-for="telefone" type="text" class="form-control" id="telefonePessoa"  aria-describedby="emailHelp" placeholder="Informe o telefone">
 <span asp-validation-for="telefone" class="text-danger"></span>  
 
 <label asp-for="cpf" for="cpf" class="color-label">CPF</label>
-<input asp-for="cpf" type="text" class="form-control cpfPessoa"  aria-describedby="emailHelp" placeholder="Informe o CPF">
+<input asp-for="cpf" type="text" class="form-control" id="cpfPessoa"  aria-describedby="emailHelp" placeholder="Informe o CPF">
 <span asp-validation-for="cpf" class="text-danger"></span> 
 
 <label asp-for="rg" for="rg" class="color-label">RG</label>
-<input asp-for="rg" type="text" class="form-control rgPessoa"  aria-describedby="emailHelp" placeholder="Informe o RG">
+<input asp-for="rg" type="text" class="form-control" id="rgPessoa"  aria-describedby="emailHelp" placeholder="Informe o RG">
 <span asp-validation-for="rg" class="text-danger"></span>  
 
 <label asp-for="dataNascimento" for="dataNascimento" class="color-label">Data de Nascimento</label>
-<input asp-for="dataNascimento" class="form-control nascPessoa"  aria-describedby="emailHelp" placeholder="Informe a data de nascimento">
+<input asp-for="dataNascimento" class="form-control" id="nascPessoa" aria-describedby="emailHelp" placeholder="Informe a data de nascimento">
 <span asp-validation-for="dataNascimento" class="text-danger"></span> 
         
 <label asp-for="naturalidade" for="naturalidade" class="color-label">Naturalidade</label>
-<input asp-for="naturalidade" class="form-control natPessoa"  aria-describedby="emailHelp" placeholder="Informe a naturalidade">
+<input asp-for="naturalidade" class="form-control" id="natPessoa" aria-describedby="emailHelp" placeholder="Informe a naturalidade">
 <span asp-validation-for="naturalidade" class="text-danger"></span>
 
 <div class="form-group mt-2 ">
     <label asp-for="sexo" class="control-label login-title"></label>
-    <select asp-for="sexo" class="form-control sexoPessoa">
+    <select asp-for="sexo" class="form-control" id="sexoPessoa">
         <option value="0">Selecione</option>
         <option value="@SexoEnum.Feminino">Feminino</option>
         <option value="@SexoEnum.Masculino">Masculino</option>
@@ -56,8 +51,8 @@
 </div>
 
 <div class="form-group mt-2 ">
-    <label asp-for="perfil" class="control-label login-title perfilPessoa"></label>
-    <select asp-for="perfil" class="form-control">
+    <label asp-for="perfil" class="control-label login-title"></label>
+    <select asp-for="perfil" class="form-control" id="perfilPessoa">
         <option value="0">Selecione</option>
         <option value="@PerfilEnum.Admin">Administrador</option>
         <option value="@PerfilEnum.Medico">Medico</option>
@@ -67,95 +62,15 @@
     <span asp-validation-for="perfil" class="text-danger"></span>
 </div>
 
+
 <div class="form-group mt-3">
-                <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />
-            </div>
-
-      </div>
-
-    </div>
- </div> 
-
-</form>
-
-<div id="form-end">
-
+    <input type="submit" value="Cadastrar" onclick="createControllerPessoa('../Pessoas/Create')" class="btn btn-primary btn-block w-100" />
 </div>
  
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    @*<script>
-         const createEndereco = () =>{
-             console.log("oi");
-                 var endereco = {
-                   cep: $('#cep').val();
-                    rua: $('#rua').val();
-                    numero: $('#numero').val();
-                    bairro: $('#bairro').val();
-                    cidade: $('#cidade').val();
-                    uf: $('#uf').val();
-               };
-
-                $.ajax({
-                        url: `@Url.Action("Create")`,
-                        method: 'POST',
-                        data: {
-                            endereco: endereco
-                        },
-                        success: (resp) => {
-                            if(resp.code == '200') {
-                                liveToastMessage(`O Registro ${idParam} foi adicionado.`, 'Endereco');
-                                setTimeout(()=>{window.location.reload();},4000);
-                            }
-                        }
-                    });
-
-
-         }
-         </script>*@
-
-    @*<script>
-               $('#cadastrarPessoa').click(()=>{
-
-               
-           var pessoa = {
-               id: $('.idPessoa').val();
-               nome: $('.nomePessoa').val();
-                nome: $('.nomePessoa').val();
-                sobrenome: $('.sobrenomePessoa').val();
-                email: $('.emailPessoa').val();
-                telefone: $('.telefonePessoa').val();
-                cpf: $('.cpfPessoa').val();
-                rg: $('.rgPessoa').val();
-                dataNascimento: $('.nascPessoa').val();
-                naturalidade: $('.natPessoa').val();
-                sexo: $('.sexoPessoa').val();
-                perfil: $('.perfilPessoa').val();
-           };
-
-           $.ajax({
-               url: '../Pessoas/Create',
-               method: 'POST',
-               data:{
-                   pessoa: pessoa
-               },
-               success: (resp) =>{
-                   var msg = "Salvo com Sucesso !";
-                   if(!(resp.code == '200')){
-                       msg = resp.status;
-                   }
-                    liveToastMessage(msg, 'Pessoa');
-                    setTimeout(() => { window.location.reload(); }, 4000);
-               }
-           });
-           });
-    </script>*@
+    }    
 
 }
-
-  
-

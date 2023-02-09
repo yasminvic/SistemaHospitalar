@@ -14,19 +14,33 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
     {
         private readonly IPacienteRepository _repository;
         private readonly IPessoaRepository _pessoaRepository;
+        private readonly IConvenioRepository _convenioRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
 
-        public PacienteService(IPacienteRepository repository, IPessoaRepository pessoaRepository)
+        public PacienteService(IPacienteRepository repository, IPessoaRepository pessoaRepository, IConvenioRepository convenioRepository, IEnderecoRepository enderecoRepository)
         {
             _repository = repository;
             _pessoaRepository = pessoaRepository;
+            _convenioRepository = convenioRepository;
+            _enderecoRepository = enderecoRepository;
         }
 
         public async Task<int> Delete(int id)
         {
             var entity = await _repository.FindById(id);
             var pessoa = await _pessoaRepository.FindById(entity.PessoaId);
-            await _pessoaRepository.Delete(pessoa);
-            return await _repository.Delete(entity);
+            await _repository.Delete(entity);
+
+            var enderecos = await _enderecoRepository.GetAll();
+            foreach (var item in enderecos)
+            {
+                if(item.PessoaId == pessoa.Id)
+                {
+                    await _enderecoRepository.Delete(item);
+                }
+            }
+
+            return await _pessoaRepository.Delete(pessoa);   
         }
 
         public async Task<PacienteDTO> FindById(int id)
@@ -49,7 +63,9 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
             foreach (var paciente in listaDTO)
             {
                 var pessoadto = new PessoaDTO();
+                var conv = new ConvenioDTO();
                 paciente.pessoa = pessoadto.mapToDTO(await _pessoaRepository.FindById(paciente.pessoaId));
+                paciente.convenio = conv.mapToDTO(await _convenioRepository.FindById(paciente.convenioId));
             }
 
             return listaDTO;

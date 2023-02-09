@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SistemaHospitalar.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
+
+
+
 </head>
 <body>
         <nav @*class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3"*@>
@@ -14,12 +18,12 @@
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-success">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark  fw-bold text-decoration-none">
+                <a asp-action="Index" asp-controller="Home" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-dark  fw-bold text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Menu</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start text-white" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link align-middle px-0">
                             <i class="glyphicon glyphicon-home"></i> <span class="ms-1 d-none d-sm-inline text-white">Home</span>
                         </a>
                     </li>
@@ -28,13 +32,13 @@
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline text-white">Listagem</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a asp-action="Index" asp-controller="Pacientes" class="nav-link px-0 text-center"> <span class="d-none d-sm-inline text-white">Pacientes</span></a>
+                                <a asp-action="Index" asp-controller="Pacientes" class="nav-link px-0 menu-listagem"> <span class="d-none d-sm-inline text-white">Pacientes</span></a>
                             </li>
                             <li>
-                                <a asp-action="Index" asp-controller="Medicos" class="nav-link px-0 text-center"> <span class="d-none d-sm-inline text-white">Médicos</span></a>
+                                <a asp-action="Index" asp-controller="Medicos" class="nav-link px-0 menu-listagem"> <span class="d-none d-sm-inline text-white">Médicos</span></a>
                             </li>
                             <li>
-                                <a asp-action="Index" asp-controller="Recepcionistas" class="nav-link px-0 text-center"> <span class="d-none d-sm-inline text-white">Recepcionistas</span></a>
+                                <a asp-action="Index" asp-controller="Recepcionistas" class="nav-link px-0 menu-listagem"> <span class="d-none d-sm-inline text-white">Recepcionistas</span></a>
                             </li>
                         </ul>
                     </li>
@@ -65,7 +69,8 @@
                 </div>
             </div>
         </div>
-         <div class="container">
+
+         <div class="container col py-3">
         <main role="main" class="pb-3">
                             @RenderBody()
         </main>
@@ -140,6 +145,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

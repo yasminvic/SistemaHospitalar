@@ -390,8 +390,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 1,
                             Cpf = "156.789.754-85",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4656),
-                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4641),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(656),
+                            DataNascimento = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(641),
                             Email = "ana@gmail.com",
                             Naturalidade = "Blumenau/SC",
                             Nome = "Ana",
@@ -406,8 +406,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 2,
                             Cpf = "456.799.466-65",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659),
-                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4659),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(660),
+                            DataNascimento = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(659),
                             Email = "carlos@gmail.com",
                             Naturalidade = "Criciúma/SC",
                             Nome = "Carlos",
@@ -422,8 +422,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 3,
                             Cpf = "787.464.796-56",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660),
-                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4660),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(662),
+                            DataNascimento = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(661),
                             Email = "maria@gmail.com",
                             Naturalidade = "Joinville/SC",
                             Nome = "Maria Clara",
@@ -438,8 +438,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 4,
                             Cpf = "899.799.465-78",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4662),
-                            DataNascimento = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4661),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(664),
+                            DataNascimento = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(663),
                             Email = "joao@gmail.com",
                             Naturalidade = "Blumenau/SC",
                             Nome = "Jupiter",
@@ -501,6 +501,8 @@ namespace SistemaHospitalar.Infra.Data.Migrations
 
                     b.HasIndex("MedicoId");
 
+                    b.HasIndex("PacienteId");
+
                     b.ToTable("Prontuarios");
 
                     b.HasData(
@@ -508,7 +510,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 1,
                             Condutas = "Solicito EDA, PHmetria e exames laboratoriais ",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4769),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(791),
                             Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na barriga que piora com café e bebidas ácidas",
                             ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica",
                             HipoteseDiagnostica = "K29 - Gastrite e duodenite",
@@ -522,7 +524,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                         {
                             Id = 2,
                             Condutas = "Solicito EDA, PHmetria e exames laboratoriais ",
-                            CreatedOn = new DateTime(2023, 2, 7, 18, 37, 20, 919, DateTimeKind.Local).AddTicks(4775),
+                            CreatedOn = new DateTime(2023, 2, 8, 18, 49, 45, 1, DateTimeKind.Local).AddTicks(794),
                             Descricao = "Aproximadamente há 20 dias, evoluiu uma dor forte na cabeça",
                             ExameFisico = "BNF sem SA, MVUA sem alterações, dor a palpação de região epigástrica",
                             HipoteseDiagnostica = "Dor de cabeça normal",
@@ -569,7 +571,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     b.HasOne("SistemaHospitalar.Domain.Entities.Pessoa", "Pessoa")
                         .WithMany("Enderecos")
                         .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pessoa");
@@ -580,13 +582,13 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     b.HasOne("SistemaHospitalar.Domain.Entities.EspecialidadeMedica", "Especialidade")
                         .WithMany()
                         .HasForeignKey("EspecialidadeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SistemaHospitalar.Domain.Entities.Pessoa", "Pessoa")
                         .WithMany()
                         .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Especialidade");
@@ -599,13 +601,13 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     b.HasOne("SistemaHospitalar.Domain.Entities.Convenio", "Convenio")
                         .WithMany()
                         .HasForeignKey("ConvenioId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SistemaHospitalar.Domain.Entities.Pessoa", "Pessoa")
                         .WithMany()
                         .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Convenio");
@@ -618,10 +620,18 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     b.HasOne("SistemaHospitalar.Domain.Entities.Medico", "Medico")
                         .WithMany()
                         .HasForeignKey("MedicoId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaHospitalar.Domain.Entities.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Medico");
+
+                    b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("SistemaHospitalar.Domain.Entities.Recepcionista", b =>
@@ -629,7 +639,7 @@ namespace SistemaHospitalar.Infra.Data.Migrations
                     b.HasOne("SistemaHospitalar.Domain.Entities.Pessoa", "Pessoa")
                         .WithMany()
                         .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pessoa");

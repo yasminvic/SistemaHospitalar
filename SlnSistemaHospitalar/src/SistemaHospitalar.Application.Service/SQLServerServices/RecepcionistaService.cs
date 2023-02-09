@@ -14,17 +14,33 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
     {
         private readonly IRecepcionistaRepository _repository;
         private readonly IPessoaRepository _pessoaRepository;
+        private readonly IEnderecoRepository _enderecoRepository;
 
-        public RecepcionistaService(IRecepcionistaRepository repository, IPessoaRepository pessoaRepository)
+        public RecepcionistaService(IRecepcionistaRepository repository, IPessoaRepository pessoaRepository, IEnderecoRepository enderecoRepository)
         {
             _repository = repository;
             _pessoaRepository = pessoaRepository;
+            _enderecoRepository = enderecoRepository;
         }
 
         public async Task<int> Delete(int id)
         {
             var entity = await _repository.FindById(id);
-            return await _repository.Delete(entity);
+            var pessoa = await _pessoaRepository.FindById(entity.PessoaId);
+
+            //deletando recepcionista
+            await _repository.Delete(entity);
+
+            var enderecos = await _enderecoRepository.GetAll();
+            foreach (var item in enderecos)
+            {
+                if (item.PessoaId == pessoa.Id)
+                {
+                    await _enderecoRepository.Delete(item);
+                }
+            }
+
+            return await _pessoaRepository.Delete(pessoa);
         }
 
 

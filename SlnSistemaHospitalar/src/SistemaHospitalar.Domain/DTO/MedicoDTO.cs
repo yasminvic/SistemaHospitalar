@@ -1,6 +1,7 @@
 ﻿using SistemaHospitalar.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,14 @@ namespace SistemaHospitalar.Domain.DTO
 {
     public class MedicoDTO
     {
+        [Display(Name = "Código")]
         public int id { get; set; }
         public int pessoaId { get; set; }
+
+        
         public int especialidadeId { get; set; }
+
+        [Display(Name = "CRM")]
         public string crm { get; set; }
         public virtual PessoaDTO? pessoa { get; set; }
         public virtual EspecialidadeMedicaDTO? especialidade { get; set; }

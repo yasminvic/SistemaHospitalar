@@ -17,9 +17,9 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: PessoasController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var pessoa = _service.GetAll();
+            var pessoa = await _service.GetAll();
             return View(pessoa);
         }
 
@@ -47,34 +47,22 @@ namespace SistemaHospitalar.Web.Controllers
         {
 
             pessoa.createdOn = DateTime.Now;
+            var retDel = new ReturnJson
+            {
+                status = "Error",
+                code = "400"
+            };
             if (ModelState.IsValid)
             {
                 await _service.Save(pessoa);
-                TempData["MensagemSucesso"] = "Registro cadastrado com sucesso";
-
-                if(pessoa.perfil == PerfilEnum.Medico)
+                retDel = new ReturnJson
                 {
-                    return RedirectToAction("Create", "Medicos");
-                }
-
-                if (pessoa.perfil == PerfilEnum.Paciente)
-                {
-                    return RedirectToAction("Create", "Pacientes");
-                }
-
-                if (pessoa.perfil == PerfilEnum.Recepcionista)
-                {
-                    return RedirectToAction("Create", "Recepcionistas");
-                }
-
-                if (pessoa.perfil == PerfilEnum.Admin)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
+                    status = "Success",
+                    code = "200"
+                };
             }
-            TempData["MensagemSucesso"] = "Erro ao cadastrar registro";
-            return View("Index", "Home");
+
+            return Json(retDel);
         }
 
         public async Task<PartialViewResult> Edit(int id)

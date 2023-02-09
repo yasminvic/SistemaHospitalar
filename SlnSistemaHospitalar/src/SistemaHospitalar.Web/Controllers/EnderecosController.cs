@@ -23,10 +23,16 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: EnderecosController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var Endereco = _service.GetAll();
+            var Endereco = await _service.GetAll();
             return View(Endereco);
+        }
+
+        public async Task<PartialViewResult> ListaEndereco(int id)
+        {
+            var lista = await _service.ListaEndereco(id);
+            return PartialView(lista);
         }
 
         // GET: EnderecosController/Details/5

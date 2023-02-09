@@ -11,5 +11,6 @@ namespace SistemaHospitalar.Domain.IServices
 {
     public interface IEnderecoService : IBaseService<EnderecoDTO>
     {
+        Task<List<EnderecoDTO>> ListaEndereco(int id);
     }
 }

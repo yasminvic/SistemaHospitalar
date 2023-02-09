@@ -1,6 +1,7 @@
 ﻿using SistemaHospitalar.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,15 @@ namespace SistemaHospitalar.Domain.DTO
     public class PessoaDTO
     {
         public int id { get; set; }
+
+        [Display(Name = "Nome")]
         public string nome { get; set; }
         public string sobrenome { get; set; }
+
+        [Display(Name = "CPF")]
         public string cpf { get; set; }
+
+        [Display(Name = "RG")]
         public string rg { get; set; }
         public string telefone { get; set; }
         public string email { get; set; }
@@ -23,6 +30,7 @@ namespace SistemaHospitalar.Domain.DTO
         public PerfilEnum perfil { get; set; }
         public DateTime createdOn { get; set; }
 
+        public virtual ICollection<EnderecoDTO>? enderecos { get; set; }
 
         public PessoaDTO mapToDTO(Pessoa pessoa)
         {

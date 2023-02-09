@@ -16,9 +16,9 @@ namespace SistemaHospitalar.Web.Controllers
 
 
         // GET: EspecialidadesController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var conv = _service.GetAll();
+            var conv = await _service.GetAll();
             return View(conv);
         }
 

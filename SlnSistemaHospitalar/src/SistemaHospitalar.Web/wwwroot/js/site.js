@@ -2,6 +2,8 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+    $('#table-index').DataTable();
+
 });
 
 //modal
@@ -32,6 +34,61 @@ liveToastMessage = (message, origin) => {
     const toastLiveMessages = $('#liveToast');
     const toast = new bootstrap.Toast(toastLiveMessages)
     toast.show()
+};
+
+const EnderecoIndex = (idPessoa) => {
+    $.ajax({
+        url: `../Enderecos/ListaEndereco/`,
+        dataType: 'html',
+        success: (response) => {
+            $('#modal-body').html(response);
+        }
+    });
+};
+
+const createPessoa = () => {
+    $.ajax({
+        url: '../Pessoas/Create',
+        dataType: 'html',
+        success: (response) => {
+            $('#modal-body').html(response)
+        }
+    });
+}
+
+const createControllerPessoa = (urlCreate) => {
+    var pessoa = {
+        nome: $('#nomePessoa').val(),
+        sobrenome: $('#sobrenomePessoa').val(),
+        email: $('#emailPessoa').val(),
+        senha: $('#senhaPessoa').val(),
+        telefone: $('#telefonePessoa').val(),
+        cpf: $('#cpfPessoa').val(),
+        rg: $('#rgPessoa').val(),
+        dataNascimento: $('#nascPessoa').val(),
+        naturalidade: $('#natPessoa').val(),
+        sexo: $('#sexoPessoa').val(),
+        perfil: $('#perfilPessoa').val(),
+    }
+
+
+    $.ajax({
+        url: urlCreate,
+        method: 'POST',
+        data: {
+            pessoa: pessoa
+        },
+        success: (resp) => {
+            if (resp.code == '200') {
+                $('#formModal').modal('hide');
+                $('#btn-pessoa').prop('disabled', true);
+                liveToastMessage(`Os dados pessoais foram salvados.`, 'Dados Pessoais');
+                setTimeout(() => { window.location.reload(); }, 4000);
+                
+            }
+        }
+
+    });
 };
 
 //carrega o forms dentro do modal
