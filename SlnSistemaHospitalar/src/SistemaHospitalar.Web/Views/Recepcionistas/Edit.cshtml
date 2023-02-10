@@ -5,14 +5,8 @@
 }
 
 <div class="text-center title-page">
-    <h1 class="display-1"><strong>Editar Convenio</strong></h1>
-    <p class="display-6"></p>
+    <h1 class="display-1 fw-bold text-success mt-5 mb-5"><strong>Editar Convênio</strong></h1>
 </div>                      
-
-<p>
-    <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
-</p>
-
 
 <form asp-controller="Recepcionistas" asp-action="Edit" method="post">
  <div class="container">
@@ -28,19 +22,18 @@
         <input asp-for="bloco" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Informe o bloco">
         <span asp-validation-for="bloco" class="text-danger"></span>    
     </div>
-        <div class="buttons-edit-create form-group">
-            <input type="submit" class="btn btn-warning w-100 btn-block" id="button-editar" value="Editar">
+        <div class="buttons-edit-create form-group mt-3 d-flex">
+            <input type="submit" class="btn btn-warning btn-sm float-start btn-block w-100" id="button-editar" value="Salvar">
+            <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-sm btn-primary ms-2 float-end btn-bloc w-100" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
+
          </div> 
+         <a class="btn btn-dark float-none btn-bloc w-100 mt-3" asp-action="Index">Voltar para Lista</a>
 </div>
 
     </div>
  </div>
 </form>
 
-
-<div>
-    <a class="btn btn-dark" asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{

@@ -7,7 +7,7 @@
 }
 
 <div class="text-center title-page">
-    <h1 class="display-1"><strong>Adicionar Medico</strong></h1>
+    <h1 class="display-1 fw-bold text-success mt-5 mb-5"><strong>Adicionar Médico</strong></h1>
 </div>                      
 
 <form asp-controller="Medicos" asp-action="Create" method="post">
@@ -25,24 +25,21 @@
 
 
     </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="Cadastrar" class="btn btn-primary btn-block w-100" />
+            <div class="form-group mt-3 d-flex">
+                <a id="btn-pessoa" class="btn btn-warning btn-sm btn-block w-100 float-start" onclick="createPessoa()" data-bs-toggle="modal" data-bs-target="#formModal">Cadastrar Dados Pessoais</a>
+                <input type="submit" value="Cadastrar Médico" class="btn ms-2 btn-primary btn-block w-100 btn-sm float-end" />
             </div>
+             <a class="btn btn-info btn-block w-100 mt-3" onclick="createEndereco()" data-bs-toggle="modal" data-bs-target="#formModal">Cadastrar Endereço</a>
          </div>
+
+         
+
     
     </div>
  </div> 
                                    
 </form>
 
-
-<p>
-    <a class="btn btn-primary" onclick="createEndereco()" data-bs-toggle="modal" data-bs-target="#formModal">Cadastrar Endereço</a>
-</p>
-
-<p>
-    <a id="btn-pessoa" class="btn btn-primary mt-5" onclick="createPessoa()" data-bs-toggle="modal" data-bs-target="#formModal">Cadastrar Dados Pessoais</a>
-</p>
 
 <div>
     <a class="btn btn-dark" asp-action="Index">Back to List</a>

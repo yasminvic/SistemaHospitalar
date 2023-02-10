@@ -7,13 +7,8 @@
 }
 
 <div class="text-center title-page">
-    <h1 class="display-1"><strong>Editar Médico</strong></h1>
+    <h1 class="display-1 fw-bold text-success mt-5 mb-5"><strong>Editar Médico</strong></h1>
 </div>                      
-
-
-<p>
-    <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
-</p>
 
 
 <form asp-controller="Medicos" asp-action="Edit" method="post">
@@ -22,32 +17,39 @@
     <div class="col-3">
         <div class="form-group text-dark">
 
-        <input type="hidden" asp-for="id" class="form-control">
+        <div class="form-group">
+            <input asp-for="id" type="hidden" class="form-control" aria-describedby="emailHelp">
+        </div>
+
+        <div class="form-group">
         <input type="hidden" asp-for="pessoaId" class="form-control" asp-items="ViewBag.pessoaId">
- 
-    </div>
+        </div>
+
+        <div class="form-group">
         <label asp-for="especialidade" for="especialidadeId" class="color-label">Especialidade Médica</label>
         <select asp-for="especialidadeId" class="form-control" asp-items="ViewBag.especialidadeId"></select>
         <span asp-validation-for="especialidadeId" class="text-danger"></span>  
+        </div>
 
+        <div class="form-group">
         <label asp-for="crm" for="crm" class="color-label">CRM</label>
         <input asp-for="crm" class="form-control">
         <span asp-validation-for="crm" class="text-danger"></span>  
+        </div>
 
-    </div>
-            <div class="form-group mt-3">
-                <input type="submit" value="Editar" class="btn btn-primary btn-block w-100" />
-            </div>
-         </div>
+        <div class="buttons-edit-create form-group mt-3 d-flex">
+            <input type="submit" class="btn btn-warning btn-sm float-start btn-block w-100" id="button-editar" value="Salvar">
+            <a onclick="editPessoa(`../../Pessoas/Edit/@Model.pessoaId`)" class="btn btn-sm btn-primary ms-2 float-end btn-bloc w-100" data-bs-toggle="modal" data-bs-target="#formModal">Editar Dados Pessoais</a>
+
+         </div> 
+         <a class="btn btn-dark float-none btn-bloc w-100 mt-3" asp-action="Index">Voltar para Lista</a>
+
 
     </div>
  </div> 
 
 </form>
 
-<div>
-    <a class="btn btn-dark" asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{
