@@ -49,7 +49,10 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
         public async Task<MedicoDTO> FindById(int id)
         {
             var med = new MedicoDTO();
-            return med.mapToDTO(await _repository.FindById(id));
+            var meddto = med.mapToDTO(await _repository.FindById(id));
+            meddto.pessoa = await _pessoaRepository.FindById(meddto.pessoaId);
+            meddto.especialidade = await _especialidadeService.FindById(meddto.especialidadeId);
+            return meddto;
         }
 
         public async Task<MedicoDTO> FindByIdPessoa(int id)
@@ -71,8 +74,6 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
 
             foreach (var medico in listaDTO)
             {
-                var pessoadto = new PessoaDTO();
-                var esp = new EspecialidadeMedicaDTO();
                 medico.pessoa = await _pessoaRepository.FindById(medico.pessoaId);
                 medico.especialidade = await _especialidadeService.FindById(medico.especialidadeId);
             }

@@ -4,6 +4,8 @@
 
     $('#table-index').DataTable();
 
+    $('#cep').mask("00000-000", {placeholder: "_____-__"});
+
 });
 
 //modal

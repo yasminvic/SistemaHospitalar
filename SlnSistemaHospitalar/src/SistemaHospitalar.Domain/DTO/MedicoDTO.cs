@@ -10,11 +10,11 @@ namespace SistemaHospitalar.Domain.DTO
 {
     public class MedicoDTO
     {
-        [Display(Name = "Código")]
+        [Display(Name = "Código do Médico")]
         public int id { get; set; }
         public int pessoaId { get; set; }
 
-        
+        [Display(Name = "Especialidade")]
         public int especialidadeId { get; set; }
 
         [Display(Name = "CRM")]

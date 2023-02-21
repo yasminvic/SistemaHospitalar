@@ -10,10 +10,12 @@ namespace SistemaHospitalar.Domain.DTO
 {
     public class PessoaDTO
     {
+        [Display(Name = "Código da Pessoa")]
         public int id { get; set; }
 
         [Display(Name = "Nome")]
         public string nome { get; set; }
+        [Display(Name = "Sobrenome")]
         public string sobrenome { get; set; }
 
         [Display(Name = "CPF")]
@@ -21,13 +23,27 @@ namespace SistemaHospitalar.Domain.DTO
 
         [Display(Name = "RG")]
         public string rg { get; set; }
+
+        [Display(Name = "Telefone")]
         public string telefone { get; set; }
+
+        [Display(Name = "E-mail")]
         public string email { get; set; }
         public string senha { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
         public DateTime dataNascimento { get; set; }
+
+        [Display(Name = "Naturalidade")]
         public string naturalidade { get; set; }
+
+        [Display(Name = "Sexo")]
         public SexoEnum sexo { get; set; }
+
+        [Display(Name = "Perfil")]
         public PerfilEnum perfil { get; set; }
+
+        [Display(Name = "Data de Cadastro")]
         public DateTime createdOn { get; set; }
 
         public virtual ICollection<EnderecoDTO>? enderecos { get; set; }
