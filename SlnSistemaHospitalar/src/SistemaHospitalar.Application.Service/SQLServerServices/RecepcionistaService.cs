@@ -47,7 +47,10 @@ namespace SistemaHospitalar.Application.Service.SQLServerServices
         public async Task<RecepcionistaDTO> FindById(int id)
         {
             var r = new RecepcionistaDTO();
-            return r.mapToDTO(await _repository.FindById(id));
+            var pessoadto = new PessoaDTO();
+            var recepdto = r.mapToDTO(await _repository.FindById(id));
+            recepdto.pessoa = pessoadto.mapToDTO(await _pessoaRepository.FindById(recepdto.pessoaId));
+            return recepdto;
         }
 
         public async Task<List<RecepcionistaDTO>> GetAll()

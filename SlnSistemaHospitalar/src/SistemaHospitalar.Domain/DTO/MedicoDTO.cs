@@ -10,7 +10,7 @@ namespace SistemaHospitalar.Domain.DTO
 {
     public class MedicoDTO
     {
-        [Display(Name = "Código do Médico")]
+        [Display(Name = "Código")]
         public int id { get; set; }
         public int pessoaId { get; set; }
 

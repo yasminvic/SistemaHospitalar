@@ -86,7 +86,6 @@ namespace SistemaHospitalar.Web.Controllers
             }
 
             var Paciente = await _service.FindById(id);
-            //ViewData["pessoaId"] = new SelectList(_pessoaService.GetAll(), "id", "nome", "Selecione...");
             ViewData["convenioId"] = new SelectList(await _convenioService.GetAll(), "id", "nome", "Selecione...");
             return View(Paciente);
         }
