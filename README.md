@@ -1,14 +1,14 @@
 # Sistema Hospitalar
 > Status: Developing
 <br>
-<b>About:</b> System for registration of patient, doctor and receptionist, with the implementation of an electronic medical record.
+<b>About:</b> Sistema para cadastro de pacientes, médicos e recepcionistas, com implementação de prontuário eletrônico. 
 <br>
 
-## Technologies Used
+## 🛠️ Construído com
 C# | ASP.NET Core | Entity Framework Core | JQuery |Bootstrap 
 :---:|:--------------:|:-----------------------:|:--------:|:---------:
 6.0| 7.0.102      | 7.0.2                 | 3.5.1  | 5.2
 
 ## This Features are in developing
-* User session
-* CRUD electronic medical record
+* Sessão do Usuário
+* CRUD Prontuário Eletrônico
