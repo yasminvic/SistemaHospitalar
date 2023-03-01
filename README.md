@@ -9,6 +9,6 @@ C# | ASP.NET Core | Entity Framework Core | JQuery |Bootstrap
 :---:|:--------------:|:-----------------------:|:--------:|:---------:
 6.0| 7.0.102      | 7.0.2                 | 3.5.1  | 5.2
 
-## This Features are in developing
+## ⚙️ Recursos em desenvolvimento
 * Sessão do Usuário
 * CRUD Prontuário Eletrônico
