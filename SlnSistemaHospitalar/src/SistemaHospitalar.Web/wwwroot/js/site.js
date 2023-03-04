@@ -2,6 +2,7 @@
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+    console.log(jQuery().jquery);
     $('#table-index').DataTable();
 
     //puxando api do CEP
@@ -9,7 +10,7 @@
 
 });
 
-//modal
+/* MODAL */
 msgModalMessage = (message, origin, callback) => {
     $('#modal-origin').html(origin);
     $('#modal-corpo').html(message);
@@ -24,7 +25,7 @@ closeMsgModalMessage = () => {
     $('#msgModal').modal('hide');
 };
 
-//toast
+/* TOAST */
 liveToastMessage = (message, origin) => {
     $('#toast-origin').html(origin);
     $('#toast-body').html(message);
@@ -39,16 +40,24 @@ liveToastMessage = (message, origin) => {
     toast.show()
 };
 
+/* LISTAR */
+
 const EnderecoIndex = (idPessoa) => {
+    
     $.ajax({
-        url: `../Enderecos/ListaEndereco/`,
+        url: `../Enderecos/ListaEndereco/${idPessoa}`,
         dataType: 'html',
         success: (response) => {
-            $('#modal-body').html(response);
+            $('#modal-body-address').html(response);
         }
     });
+
+    //$('#').modal('show');
 };
 
+/* CREATE */
+
+// Pessoa
 const createPessoa = () => {
     $.ajax({
         url: '../Pessoas/Create',
@@ -94,8 +103,54 @@ const createControllerPessoa = (urlCreate) => {
     });
 };
 
-//carrega o forms dentro do modal
+
+//Endereço
+const createEndereco = () => {
+    $.ajax({
+        url: '../Enderecos/Create',
+        dataType: 'html',
+        success: (resp) => {
+            $('#modal-body').html(resp);
+        }
+    });
+}
+
+const createEnderecoPost = () => {
+    var endereco = {
+        cep: $('#cep').val(),
+        rua: $('#rua').val(),
+        numero: $('#numero').val(),
+        bairro: $('#bairro').val(),
+        cidade: $('#cidade').val(),
+        uf: $('#uf').val()
+    };
+
+    $.ajax({
+        url: `../Enderecos/Create`,
+        method: 'POST',
+        data: {
+            endereco: endereco
+        },
+        success: (resp) => {
+            if (resp.code == '200') {
+                $('#formModal').modal('hide');
+                liveToastMessage(`O Endereço foi adicionado.`, 'Endereco');
+                setTimeout(() => { window.location.reload(); }, 4000);
+            }
+        }
+    });
+
+
+};
+
+
+/* EDIT */
+
+//Pessoa
 const editPessoa = (urlEdit) => {
+    //carrega o forms dentro do modal
+    let h1 = '<h1 class="modal-title fs-5">Editar Informações Pessoais</h1>'
+    $('#modal-title').html(h1);
     $.ajax({
         url: urlEdit,
         dataType: 'html',
@@ -105,9 +160,8 @@ const editPessoa = (urlEdit) => {
     });
 };
 
-//faz o post pra controller
 const editControllerPessoa = (idPessoa, urlEdit) => {
-    console.log(idPessoa);
+    //faz o post pra controller
     var pessoa = {
         id: $('#idEdit').val(),
         nome: $('#nomeEdit').val(),
@@ -145,43 +199,23 @@ const editControllerPessoa = (idPessoa, urlEdit) => {
 };
 
 
-// ENDERECO
-//carrega o forms do endereco no modal
-const createEndereco = () => {
-    $.ajax({
-        url: '../Enderecos/Create',
-        dataType: 'html',
-        success: (resp) => {
-            $('#modal-body').html(resp);
-        }
+
+/* DELETE */
+const deleteRegistro = (idParam, origin, urlParam) => {
+    msgModalMessage(`Deseja realmente excluir o registro ${idParam}?`, origin, () => {
+        $.ajax({
+            url: urlParam,
+            method: 'POST',
+            data: {
+                id: idParam
+            },
+            success: (resp) => {
+                if (resp.code == '200') {
+                    liveToastMessage(`O Registro ${idParam} foi excluído.`, origin);
+                    setTimeout(() => { window.location.reload(); }, 4000);
+                }
+            }
+        });
+        closeMsgModalMessage();
     });
 }
-
-//fazendo o post do endereco
-const createEnderecoPost = () => {
-    var endereco = {
-        cep: $('#cep').val(),
-        rua: $('#rua').val(),
-        numero: $('#numero').val(),
-        bairro: $('#bairro').val(),
-        cidade: $('#cidade').val(),
-        uf: $('#uf').val()
-    };
-
-    $.ajax({
-        url: `../Enderecos/Create`,
-        method: 'POST',
-        data: {
-            endereco: endereco
-        },
-        success: (resp) => {
-            if (resp.code == '200') {
-                $('#formModal').modal('hide');
-                liveToastMessage(`O Endereço foi adicionado.`, 'Endereco');
-                setTimeout(() => { window.location.reload(); }, 4000);
-            }
-        }
-    });
-
-
-};

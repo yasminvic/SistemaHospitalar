@@ -41,6 +41,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.bloco)
             </th>
+            <th>
+                Endereços
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -64,9 +67,15 @@
                     @Html.DisplayFor(modelItem => item.bloco)
                 </td>
                 <td>
-                                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">Editar</a> 
-                                    <a class="btn btn-outline-warning btn-sm" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Detalhes</a> 
-                                    <a class="btn btn-outline-danger btn-sm"  href="#" onclick="deleteRecepcionista(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Excluir </a>
+
+                    <a href="#" class="btn btn-success btn-sm" onclick="EnderecoIndex(@item.pessoaId)" data-bs-toggle="modal" data-bs-target="#addressModal">
+                        @(@item.pessoa.enderecos != null && @item.pessoa.enderecos.Any() ? @item.pessoa.enderecos.Count() : 0)
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">Editar</a> 
+                    <a class="btn btn-outline-warning btn-sm" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Detalhes</a> 
+                    <a class="btn btn-outline-danger btn-sm"  href="#" onclick="deleteRegistro(@item.id, 'Recepcionista', '/Recepcionistas/Delete')" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Excluir </a>
                 </td>
             </tr>
         }
@@ -74,36 +83,4 @@
 </table>
 </div>
 
-@section Scripts {
-    <script>
-            const deleteRecepcionista = (idParam) => {
-                    msgModalMessage(`Deseja realmente excluir a(o) Recepcionista ${idParam}?`, 'Recepcionista',() => {
-                        $.ajax({
-                            url: `@Url.Action("Delete")`,
-                            method: 'POST',
-                            data: {
-                                id: idParam
-                            },
-                            success: (resp) => {
-                                if(resp.code == '200') {
-                                    liveToastMessage(`A(O) Recepcionista ${idParam} foi excluído.`, 'Recepcionista');
-                                    setTimeout(()=>{window.location.reload();},4000);
-                                }
-                            }
-                        });
-                        closeMsgModalMessage();
-                    });
-                }
-
-                    $(document).ready(()=>{
-                    $.ajax({
-                        url: '../Pessoas/Create',
-                        dataType: 'html',
-                        success: (response) =>{
-                            $('#modal-body').html(response)
-                        }
-                    });
-                });
-    </script>
-}
 

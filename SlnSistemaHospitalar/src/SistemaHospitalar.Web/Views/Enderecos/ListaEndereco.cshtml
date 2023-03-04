@@ -17,7 +17,7 @@
 }
 
 <p>
-    <button type="button" class="btn btn-primary" asp-action="Create" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Pessoa</button>
+    <button type="button" class="btn btn-primary" onclick="createEndereco()" data-bs-target="#formModal" data-bs-toggle="modal">Adicionar outro Endereço</button>
 </p>
 
 <div class="index table-responsive"> 
@@ -74,36 +74,12 @@
                     @Html.DisplayFor(modelItem => item.uf)
                 </td>
                 <td>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">Edit</a> |
-                        <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Details</a> |
-                        <a class="btn btn-danger" href="#" onclick="deleteEndereco(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Delete</a>
-            </td>
+                    <a class="btn btn-warning btn-sm" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Details</a> |
+                    <a class="btn btn-danger btn-sm"  onclick="deleteRegistro(@item.id, 'Endereço', '../Enderecos/Delete')" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Delete</a>
+                </td>
         </tr>
     }
 </tbody>
 </table>
 </div>
-
-@section Scripts {
-    <script>
-        const deleteEndereco = (idParam) => {
-            msgModalMessage(`Deseja realmente excluir o registro ${idParam}?`, 'Endereço',() => {
-                $.ajax({
-                    url: `@Url.Action("Delete")`,
-                    method: 'POST',
-                    data: {
-                        id: idParam
-                    },
-                    success: (resp) => {
-                        if(resp.code == '200') {
-                            liveToastMessage(`O Registro ${idParam} foi excluído.`, 'Endereço');
-                            setTimeout(()=>{window.location.reload();},4000);
-                        }
-                    }
-                });
-                closeMsgModalMessage();
-            });
-        }
-    </script>
-}
 

@@ -55,10 +55,7 @@
     </dl>
 </div>
 <div class="mt-5">
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">
-        <img  width="30" height="30" src="~/img/editar.png">
-    </a> 
-    <a class="btn btn-dark" asp-action="Index" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Voltar para lista">
+    <a class="btn btn-dark" onclick="javascript:history.go(-1);" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Voltar para lista">
         <img width="30" height="30" src="~/img/back.png"/>
     </a>
 </div>

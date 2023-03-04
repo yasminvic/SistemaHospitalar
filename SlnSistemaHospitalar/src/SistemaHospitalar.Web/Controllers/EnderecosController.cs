@@ -32,6 +32,7 @@ namespace SistemaHospitalar.Web.Controllers
         public async Task<PartialViewResult> ListaEndereco(int id)
         {
             var lista = await _service.ListaEndereco(id);
+            //var lista = await _service.GetAll();
             return PartialView(lista);
         }
 

@@ -47,7 +47,7 @@
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">
                         <img  width="30" height="30" src="~/img/editar.png">
                     </a> 
-                    <a class="btn btn-danger" href="#" onclick="deleteConvenio(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">
+                        <a class="btn btn-danger" href="#" onclick="deleteRegistro(@item.id, 'Convenio', '/Convenios/Delete')" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">
                         <img width="30" height="30" src="~/img/lixeira.png">
                     </a>
                 </td>
@@ -58,26 +58,4 @@
 
 </div>
 
-@section Scripts {
-    <script>
-            const deleteConvenio = (idParam) => {
-                    msgModalMessage(`Deseja realmente excluir o Convênio ${idParam}?`, 'Convênio',() => {
-                        $.ajax({
-                            url: `@Url.Action("Delete")`,
-                            method: 'POST',
-                            data: {
-                                id: idParam
-                            },
-                            success: (resp) => {
-                                if(resp.code == '200') {
-                                    liveToastMessage(`O Convênio ${idParam} foi excluído.`, 'Convênio');
-                                    setTimeout(()=>{window.location.reload();},4000);
-                                }
-                            }
-                        });
-                        closeMsgModalMessage();
-                    });
-                }
-    </script>
-}
 

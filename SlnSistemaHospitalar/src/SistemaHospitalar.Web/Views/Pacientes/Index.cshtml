@@ -69,16 +69,18 @@
                     @Html.DisplayFor(modelItem => item.convenio.nome)
                 </td>
                 <td>
-                    
-                    <a href="#" class="btn btn-success btn-sm" onclick="EnderecoIndex(@item.pessoaId)"></a>
+
+                    <a href="#" class="btn btn-success btn-sm" onclick="EnderecoIndex(@item.pessoaId)" data-bs-toggle="modal" data-bs-target="#addressModal">
+                        @(@item.pessoa.enderecos != null && @item.pessoa.enderecos.Any() ? @item.pessoa.enderecos.Count() : 0)
+                    </a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.situacao)
                 </td>
                 <td>
                         <a class="btn btn-outline-primary btn-sm"  asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">Editar</a> 
-                                    <a class="btn btn-outline-warning btn-sm" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Detalhes</a> 
-                                    <a class="btn btn-outline-danger btn-sm"  href="#" onclick="deletePaciente(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Excluir </a>
+                        <a class="btn btn-outline-warning btn-sm" asp-action="Details" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Ver Detalhes">Detalhes</a>
+                        <a class="btn btn-outline-danger btn-sm" href="#" onclick="deleteRegistro(@item.id, 'Paciente', '/Pacientes/Delete')" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">Excluir </a>
                     </td>
             </tr>
         }
@@ -86,27 +88,9 @@
 </table>
 </div>
 
+
 @section Scripts {
     <script>
-            const deletePaciente = (idParam) => {
-                msgModalMessage(`Deseja realmente excluir o registro ${idParam}?`, 'Paciente',() => {
-                    $.ajax({
-                        url: `@Url.Action("Delete")`,
-                        method: 'POST',
-                        data: {
-                            id: idParam
-                        },
-                        success: (resp) => {
-                            if(resp.code == '200') {
-                                liveToastMessage(`O Registro ${idParam} foi excluído.`, 'Category');
-                                setTimeout(()=>{window.location.reload();},4000);
-                            }
-                        }
-                    });
-                    closeMsgModalMessage();
-                });
-            }
-
             const carregaProntuario = (idParam) =>{
                 var idPaciente = idParam;
                 console.log('oi');
@@ -120,15 +104,15 @@
                     });
             };
 
-            const addPessoa = () =>{
-                    $.ajax({
-                        url: '../Pessoas/Create',
-                        dataType: 'html',
-                        success: (response) =>{
-                            $('#modal-body').html(response)
-                        }
-                    });
-            };
+            //const addPessoa = () =>{
+            //        $.ajax({
+            //            url: '../Pessoas/Create',
+            //            dataType: 'html',
+            //            success: (response) =>{
+            //                $('#modal-body').html(response)
+            //            }
+            //        });
+            //};
 
             const createProntuario = () =>{
             console.log("oi");

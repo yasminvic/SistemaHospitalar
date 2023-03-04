@@ -46,39 +46,16 @@
                     @Html.DisplayFor(modelItem => item.nome)
                 </td>
                 <td>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">
-                            <img  width="30" height="30" src="~/img/editar.png">
-                        </a> 
-                        <a class="btn btn-danger" href="#" onclick="deleteEspecialidade(@item.id)" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">
-                            <img width="30" height="30" src="~/img/lixeira.png">
-                        </a>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.id" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Editar">
+                        <img  width="30" height="30" src="~/img/editar.png">
+                    </a>
+                        <a class="btn btn-danger" href="#" onclick="deleteRegistro(@item.id, 'Especialidade', '/Especialidades/Delete')" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Excluir">
+                        <img width="30" height="30" src="~/img/lixeira.png">
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 </div>
-
-@section Scripts {
-    <script>
-            const deleteEspecialidade = (idParam) => {
-                    msgModalMessage(`Deseja realmente excluir a Especialidade ${idParam}?`, 'Especialidade',() => {
-                        $.ajax({
-                            url: `@Url.Action("Delete")`,
-                            method: 'POST',
-                            data: {
-                                id: idParam
-                            },
-                            success: (resp) => {
-                                if(resp.code == '200') {
-                                    liveToastMessage(`A Especialidade ${idParam} foi excluído.`, 'Especialidade');
-                                    setTimeout(()=>{window.location.reload();},4000);
-                                }
-                            }
-                        });
-                        closeMsgModalMessage();
-                    });
-                }
-    </script>
-}
 
